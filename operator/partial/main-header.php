@@ -82,12 +82,6 @@
 													<span class="text">Generated Ketrampilan</span>
 												</div>
 											</a>
-											<a class="col-6 col-md-4 p-0" href="rekapNilai.php">
-												<div class="quick-actions-item">
-													<i class="flaticon-database"></i>
-													<span class="text">Rekapitulasi Nilai</span>
-												</div>
-											</a>
 											<a class="col-6 col-md-4 p-0" href="cetakraport.php">
 												<div class="quick-actions-item">
 													<i class="flaticon-pen"></i>
