@@ -8,6 +8,7 @@ $sql_tahun=mysqli_query($koneksi, "select * from konfigurasi");
 $esmanis=mysqli_fetch_array($sql_tahun);
 $tpl_aktif=$esmanis['tapel'];
 $smt_aktif=$esmanis['semester'];
+$logologin=$esmanis['image_login'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,7 +86,7 @@ $smt_aktif=$esmanis['semester'];
 					</div>
 				</form>
 				
-				<div class="login100-more" style="background-image: url('images/bg-01.jpg');">
+				<div class="login100-more" style="background-image: url('../images/<?=$logologin;?>');">
 				</div>
 			</div>
 		</div>

@@ -115,12 +115,11 @@ $smt=isset($_GET['smt']) ? $_GET['smt'] : $smt_aktif;
 		$('#kelas').change(function(){
 			//Mengambil value dari option select kd kemudian parameternya dikirim menggunakan ajax
 			var kelas=$('#kelas').val();
-			var level=<?=$level;?>;
 			
 			$.ajax({
 				type : 'GET',
 				url : 'mpl.php',
-				data :  'kelas=' +kelas+'&level='+level,
+				data :  'kelas=' +kelas,
 				success: function (data) {
 
 					//jika data berhasil didapatkan, tampilkan ke dalam option select mp

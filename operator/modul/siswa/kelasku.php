@@ -33,9 +33,11 @@ while ($row = $query->fetch_assoc()) {
 	$ids=$pn['id'];
 	$rmb=$row['rombel'];
 	$actionButton = '
-		<a href="#myModal" class="btn btn-info btn-border btn-round btn-sm" type="button" id="'.$ids.'" data-toggle="modal" data-id="'.$ids.'"><i class="fa fa-edit"></i> Edit</a>
-		<button class="btn btn-info btn-border btn-round btn-sm" type="button" data-toggle="modal" data-target="#outMemberModal" onclick="outMember('.$row['id_rombel'].')"><i class="fa fa-trash"></i> Out</button>
-		<a href="../cetak/cetakNISN.php?idp='.$ids.'" class="btn btn-info btn-border btn-round btn-sm" type="button" target="_blank"><i class="fa fa-print"></i> NISN</a>
+		<ul class="pagination pg-primary">
+		<li class="page-item"><button data-target="#myModal" class="btn btn-info btn-border btn-round btn-sm" type="button" id="'.$ids.'" data-toggle="modal" data-id="'.$ids.'"><i class="fa fa-edit"></i> Edit</button></li>
+		<li class="page-item"><button class="btn btn-info btn-border btn-round btn-sm" type="button" data-toggle="modal" data-target="#outMemberModal" onclick="outMember('.$row['id_rombel'].')"><i class="fa fa-trash"></i> Out</button></li>
+		<li class="page-item"><a href="../cetak/cetakNISN.php?idp='.$ids.'" class="btn btn-info btn-border btn-round btn-sm" type="button" target="_blank"><i class="fa fa-print"></i> NISN</a></li>
+		</ul>
 		';
 	$tgl=$pn['tempat'].", ".TanggalIndo($pn['tanggal']);
 	$namasis=$pn['nama'];

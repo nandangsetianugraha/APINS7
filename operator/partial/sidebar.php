@@ -23,12 +23,12 @@
 										</a>
 									</li>
 									<li>
-										<a href="#edit">
-											<span class="link-collapse">Edit Profile</span>
+										<a href="pengguna.php">
+											<span class="link-collapse">Pengguna</span>
 										</a>
 									</li>
 									<li>
-										<a href="#settings">
+										<a href="konfig.php">
 											<span class="link-collapse">Settings</span>
 										</a>
 									</li>
@@ -52,7 +52,7 @@
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#pd" class="collapsed" aria-expanded="false">
 								<i class="fas fa-address-card"></i>
-								<p>Peserta Didik</p>
+								<p>Data Sekolah</p>
 								<span class="caret"></span>
 							</a>
 							<div class="collapse" id="pd">
@@ -63,8 +63,8 @@
 										</a>
 									</li>
 									<li>
-										<a href="absensi.php">
-											<span class="sub-item">Absensi</span>
+										<a href="guru.php">
+											<span class="sub-item">Daftar PTK</span>
 										</a>
 									</li>
 								</ul>

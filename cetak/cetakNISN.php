@@ -32,12 +32,12 @@ if($siswa['jk']==='P'){
 	$jk="Laki-laki";
 };
 if(file_exists( $_SERVER{'DOCUMENT_ROOT'} . "/images/siswa/".$siswa['avatar'])){
-		$gbr="../../images/siswa/".$siswa['avatar'];
+		$gbr="../images/siswa/".$siswa['avatar'];
 	}else{
 	    if($siswa['jk']==='P'){
-	       $gbr="../../images/wanita.png"; 
+	       $gbr="../images/wanita.png"; 
 	    }else{
-	       $gbr="../../images/laki.jpg";
+	       $gbr="../images/laki.jpg";
 	    };
 	};
 // initiate FPDI
@@ -73,9 +73,9 @@ if(empty($siswa['kecamatan']) || $siswa['kecamatan']==0){
     $pdf->Write(0, ''); 
 }else{
     $idkec= $siswa['kecamatan'];
-    $kec= $connect->query("select * from kecamatan where id_kecamatan='$idkec'")->fetch_assoc();
+    $kec= $connect->query("select * from kecamatan where id='$idkec'")->fetch_assoc();
     $pdf->SetXY(36, 29);
-    $pdf->Write(0, $kec['nama_kecamatan']);
+    $pdf->Write(0, $kec['nama']);
 };
 
 //Jenis Kelamin
@@ -84,6 +84,6 @@ $pdf->Write(0, $jk);
 //Titimangsan Kartu
 $pdf->SetXY(72, 38);
 $pdf->Write(0, '16 Juli 2018');
-$pdf->Image($gbr,10,38);
+//$pdf->Image($gbr,10,38);
 
 $pdf->Output();
