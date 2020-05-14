@@ -1,23 +1,1 @@
-<?php
-function TanggalIndo($tanggal)
-{
-	$bulan = array ('Januari',
-				'Februari',
-				'Maret',
-				'April',
-				'Mei',
-				'Juni',
-				'Juli',
-				'Agustus',
-				'September',
-				'Oktober',
-				'November',
-				'Desember'
-			);
-	$split = explode('-', $tanggal);
-	return $split[2] . ' ' . $bulan[ (int)$split[1]-1 ] . ' ' . $split[0];
-};
-include '../../../assets/db.php';
-$idp=isset($_GET['idp']) ? $_GET['idp'] : $idku;
-$sqsk=mysqli_query($koneksi, "select * from sk where ptk_id='$idp' order by tanggal_sk desc");$i=0;
-?>													<ul class="timeline">													<?php 													while($skk=mysqli_fetch_array($sqsk)){														$i=$i+1;													?>														<li <?php if($i%2 == 0){echo "class='timeline-inverted'";}; ?>>															<div class="timeline-badge"><i class="flaticon-message"></i></div>															<div class="timeline-panel">																<div class="timeline-heading">																	<h4 class="timeline-title"><?=$skk['no_sk'];?></h4>																	<p><small class="text-muted"><i class="flaticon-message"></i> <?=TanggalIndo($skk['tanggal_sk']);?></small></p>																</div>																<div class="timeline-body">																	<p>																	Jabatan : <?=$skk['jabatan'];?><br/>																	Pengangkat : <?=$skk['pengangkat'];?><br/>																	</p>																	<p><a href="../cetak/cetakSK.php?id=<?=$skk['id_sk'];?>&idptk=<?=$idp;?>" class="btn btn-primary btn-xs" target="_blank"><i class="fa fa-print"></i> Print</a></p>																</div>															</div>														</li>													<?php }; ?>													</ul>
+<?php require_once '../../../assets/db_connect.php';function TanggalIndo($date){    $BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");     $tahun = substr($date, 0, 4);    $bulan = substr($date, 5, 2);    $tgl   = substr($date, 8, 2);     $result = $tgl . " " . $BulanIndo[(int)$bulan-1] . " ". $tahun;            return($result);};$idp=isset($_GET['idp']) ? $_GET['idp'] : '0';$output = array('data' => array());$sql = "select * from sk where ptk_id='$idp' order by tanggal_sk desc";$query = $connect->query($sql);while ($row = $query->fetch_assoc()) {	$ids=$row['id_sk'];	$actionButton = '	<ul class="pagination pg-primary">	<li class="page-item"><a href="../cetak/cetakSK.php?id='.$ids.'&idptk='.$idp.'" class="btn btn-info btn-border btn-round btn-sm"><i class="fas fa-print"></i></a></li>	</ul>	';		$output['data'][] = array(		TanggalIndo($row['tanggal_sk']),		$row['no_sk'],		$row['jabatan'],		$row['pengangkat'],		$actionButton	);}// database connection close$connect->close();echo json_encode($output);

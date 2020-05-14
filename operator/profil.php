@@ -147,7 +147,22 @@
 													</div>
 												</div>
 												<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-													<div id="hasil"></div>
+													<div class="table-responsive">
+														<table id="SKTable" class="table table-bordered table-hover">
+																<thead>
+																	<tr>
+																		<th class="text-center">Tanggal SK</th>
+																		<th class="text-center">Nomor SK</th>
+																		<th class="text-center">Jabatan</th>
+																		<th class="text-center">Pejabat Pengangkat</th>
+																		<th>&nbsp;</th>
+																	</tr>
+																</thead>
+																<tbody>
+																
+																</tbody>
+															</table>
+													</div>
 												</div>
 												<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
 													<?php 
@@ -232,13 +247,13 @@
 	<?php include "partial/foot.php"; ?>
 	<script src="croppie.js"></script>
 	<script>  
+var SKTable;	
 $(document).ready(function(){
-	viewSK();
-	function viewSK(){
-		$.get("modul/ptk/lihatSK.php?idp=<?=$idku;?>", function(data) {
-			$("#hasil").html(data);
+	SKTable = $("#SKTable").DataTable({
+			"destroy":true,
+			"ajax": "modul/ptk/lihatSK.php?idp=<?=$idp;?>",
+			"order": []
 		});
-	};
 	$image_crop = $('#image_demo').croppie({
     enableExif: true,
     viewport: {
