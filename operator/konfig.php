@@ -90,6 +90,31 @@ $smt=isset($_GET['smt']) ? $_GET['smt'] : $smt_aktif;
 								<div class="tab-pane fade show" id="pills-tapels" role="tabpanel" aria-labelledby="pills-tapels-tab">
 								</div>
 								<div class="tab-pane fade show" id="pills-kelas" role="tabpanel" aria-labelledby="pills-kelas-tab">
+									<a href="#" data-toggle="modal" data-target="#tambahKelas" title="Contacts" id="<?=$tapel;?>" class="btn btn-info btn-border btn-round btn-sm">
+										<span class="btn-label">
+											<i class="fa fa-plus"></i>
+										</span>
+										Rombel
+									</a>
+									<div class="table-responsive">
+										<table id="KelasTable" class="display table">
+											<thead>
+											   <tr>
+													<th>Nama Rombel</th>
+													<th>Kurikulum</th>
+													<th>Wali Kelas</th>
+													<th>Pendamping</th>
+													<th>Guru PAI</th>
+													<th>Guru Penjas</th>
+													<th>Guru Bahasa Inggris</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody>	
+																			
+											</tbody>
+										</table>
+									</div>
 								</div>
 								<div class="tab-pane fade show" id="pills-login" role="tabpanel" aria-labelledby="pills-login-tab">
 									<div class="row">
@@ -127,29 +152,33 @@ $smt=isset($_GET['smt']) ? $_GET['smt'] : $smt_aktif;
 			</div>
 			<?php include "partial/footer.php"; ?>
 		</div>
-		<!--Modal Penempatan-->
-		<div class="modal fade" id="penempatan">
+		<!--Tambah Kelas-->
+		<div class="modal fade" id="tambahKelas">
           <div class="modal-dialog">
             <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title">Daftar Siswa</h4>
-              </div>
-              <div class="modal-body">
-				<table id="managePenempatan" class="table table-bordered table-hover">
-									<thead>
-									   <tr>
-											
-											<th>Nama Siswa</th>
-											<th>JK</th>
-											<th>Kelas Sebelumnya</th>
-											<th>&nbsp;</th>
-										</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
-			  </div>
-            </div>
+				<div class="modal-header">
+					<h4 class="modal-title">Tambah Rombel</h4>
+				</div>
+                <form class="form-horizontal" action="modul/setting/tambahKelas.php" autocomplete="off" method="POST" id="createKelasForm">
+					<div class="fetched-data"></div>
+				</form>
+			</div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+		
+		<!--Edit Kelas-->
+		<div class="modal fade" id="editKelas">
+          <div class="modal-dialog">
+            <div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Edit Rombel</h4>
+				</div>
+                <form class="form-horizontal" action="modul/setting/updateKelas.php" autocomplete="off" method="POST" id="updateKelasForm">
+					<div class="fetched-data"></div>
+				</form>
+			</div>
             <!-- /.modal-content -->
           </div>
           <!-- /.modal-dialog -->
@@ -163,7 +192,59 @@ $smt=isset($_GET['smt']) ? $_GET['smt'] : $smt_aktif;
 	<?php include "partial/foot.php"; ?>
 	<script src="jquery.form.js"></script>
 <script>
+var KelasTable;
+var TapelTable;
 $(document).ready(function(){
+	KelasTable = $('#KelasTable').DataTable( {
+		"destroy":true,
+		"searching": false,
+		"paging":false,
+		"ajax": "modul/setting/daftarKelas.php?tapel=<?=$tapel;?>",
+		"order": []
+	} );
+	TapelTable = $('#TapelTable').DataTable( {
+		"destroy":true,
+		"searching": false,
+		"paging":false,
+		"ajax": "modul/setting/daftarTapel.php",
+		"order": []
+	} );
+	$('#tambahKelas').on('show.bs.modal', function (e) {
+            var rowid = $(e.relatedTarget).data('id');
+			var mp = $('#mp').val();
+			var kelas=$('#kelas').val();
+            //menggunakan fungsi ajax untuk pengambilan data
+            $.ajax({
+                type : 'get',
+                url : 'modul/setting/modal_Kelas.php',
+                data :  'tapel=<?=$tapel;?>',
+				beforeSend: function()
+						{	
+							$(".fetched-data").html('<i class="fa fa-spinner fa-pulse fa-fw"></i> Loading ...');
+						},
+                success : function(data){
+                $('.fetched-data').html(data);//menampilkan data ke dalam modal
+                }
+            });
+         });
+	$('#editKelas').on('show.bs.modal', function (e) {
+            var rowid = $(e.relatedTarget).data('id');
+			var mp = $('#mp').val();
+			var kelas=$('#kelas').val();
+            //menggunakan fungsi ajax untuk pengambilan data
+            $.ajax({
+                type : 'get',
+                url : 'modul/setting/edit_Kelas.php',
+                data :  'id='+rowid,
+				beforeSend: function()
+						{	
+							$(".fetched-data").html('<i class="fa fa-spinner fa-pulse fa-fw"></i> Loading ...');
+						},
+                success : function(data){
+                $('.fetched-data').html(data);//menampilkan data ke dalam modal
+                }
+            });
+         });
 	$('#progess-bar').hide();
 	$('#uploadImage').submit(function(event){
 		if($('#uploadFile').val())
@@ -260,7 +341,59 @@ $(document).ready(function(){
 
 				return false;
 			}); // /submit form for create member
+	$("#updateKelasForm").unbind('submit').bind('submit', function() {
 
+				var form = $(this);
+
+				
+
+					//submi the form to server
+					$.ajax({
+						url : form.attr('action'),
+						type : form.attr('method'),
+						data : form.serialize(),
+						dataType : 'json',
+						success:function(response) {
+
+							// remove the error 
+							
+							if(response.success == true) {
+								$.notify({
+									icon: 'flaticon-alarm-1',
+									title: 'Sukses',
+									message: response.messages,
+								},{
+									type: 'info',
+									placement: {
+									from: "bottom",
+									align: "right"
+								},
+									time: 10,
+								});
+								KelasTable.ajax.reload(null, false);
+								$("#editKelas").modal('hide');
+							
+							} else {
+								$.notify({
+									icon: 'flaticon-alarm-1',
+									title: 'Sukses',
+									message: response.messages,
+								},{
+									type: 'info',
+									placement: {
+									from: "bottom",
+									align: "right"
+								},
+									time: 10,
+								});
+							}  // /else
+						} // success  
+					}); // ajax subit 				
+				
+
+
+				return false;
+			}); // /submit form for create member
 });  
 </script>	
 </body>

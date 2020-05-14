@@ -42,11 +42,11 @@ $mpm=mysqli_fetch_array(mysqli_query($koneksi, "select * from mapel where id_map
 								<label>Kelas</label>
 								<input type="hidden" name="tapel" id="tapel" class="form-control" value="<?=$tapel;?>" placeholder="Username">
 								<input type="hidden" name="smt" id="smt" class="form-control" value="<?=$smt;?>" placeholder="Username">
-								<?php if($level==94 or $level==95 or $level==96){?>
+								<?php if($level==96){?>
 								<select class="form-control" id="kelas" name="kelas">
 									<option value="0">Pilih Rombel</option>
 									<?php 
-									$sql_mk=mysqli_query($koneksi, "select * from rombel where tapel='$tapel' order by nama_rombel asc");
+									$sql_mk=mysqli_query($koneksi, "select * from rombel where tapel='$tapel' and pai='$idku' order by nama_rombel asc");
 									while($nk=mysqli_fetch_array($sql_mk)){
 									?>
 									<option value="<?=$nk['nama_rombel'];?>"><?=$nk['nama_rombel'];?></option>

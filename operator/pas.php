@@ -102,7 +102,7 @@
 			
 			$.ajax({
 				type : 'GET',
-				url : 'mpl.php',
+				url : 'mapel.php',
 				data :  'kelas=' +kelas,
 				success: function (data) {
 

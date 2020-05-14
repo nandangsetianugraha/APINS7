@@ -5,8 +5,8 @@ require_once '../../../assets/db_connect.php';
 if($_POST) {	
 
 	$validator = array('success' => false, 'messages' => array());
-	$username=$_POST['username'];
-	$password=$_POST['password'];
+	$username=strip_tags($connect->real_escape_string($_POST['username']));
+	$password=strip_tags($connect->real_escape_string($_POST['password']));
 	$ptkid=$_POST['ptkid'];
 	if(empty($username) || empty($password)){
 		$validator['success'] = false;

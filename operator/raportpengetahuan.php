@@ -123,17 +123,12 @@ $mpm=mysqli_fetch_array(mysqli_query($koneksi, "select * from mapel where id_map
 			
 			$.ajax({
 				type : 'GET',
-				url : 'mpl.php',
+				url : 'mapel.php',
 				data :  'kelas=' +kelas,
-				beforeSend: function()
-				{	
-					$("#nilaiHarian").html('<div class="alert alert-info alert-dismissible"><h4><i class="fa fa-spinner fa-pulse fa-fw"></i> Loading....</h4></div>');
-				},
 				success: function (data) {
 
 					//jika data berhasil didapatkan, tampilkan ke dalam option select mp
 					$("#mp").html(data);
-					$("#nilaiHarian").html('<div class="alert alert-info alert-dismissible"><h4><i class="icon fa fa-info"></i> Informasi</h4>Silahkan Pilih Mata Pelajaran</div>');
 				}
 			});
 		});

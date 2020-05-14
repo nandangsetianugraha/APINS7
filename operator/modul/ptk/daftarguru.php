@@ -19,30 +19,81 @@ $query = $connect->query($sql);
 while ($row = $query->fetch_assoc()) {
 	$idp=$row['ptk_id'];
 	$ids=$row['id'];
-	$sqlp = "SELECT * FROM mengajar where tapel='$tapel' and ptk_id='$idp'";
-	$queryp = $connect->query($sqlp);
-	$ada = $queryp->num_rows;
-	if($ada>0){
-		$pn = $queryp->fetch_assoc();
-		$rmb=$pn['rombel'];
-		if($rmb=="0"){
-			$ptn="Semua Kelas";
+	$lvl=$row['jenis_ptk_id'];
+	if($lvl==98){
+		$sqlp = "SELECT * FROM rombel where tapel='$tapel' and wali_kelas='$idp'";
+		$queryp = $connect->query($sqlp);
+		$ada = $queryp->num_rows;
+		if($ada>0){
+			$pn = $queryp->fetch_assoc();
+			$rmb=$pn['nama_rombel'];
 		}else{
-			$ptn=$rmb;
+			$rmb="";
 		};
-	}else{
+	}elseif($lvl==97){
+		$sqlp = "SELECT * FROM rombel where tapel='$tapel' and pendamping='$idp'";
+		$queryp = $connect->query($sqlp);
+		$ada = $queryp->num_rows;
+		if($ada>0){
+			$pn = $queryp->fetch_assoc();
+			$rmb=$pn['nama_rombel'];
+		}else{
+			$rmb="";
+		};
+	}elseif($lvl==96){
+		$sqlp = "SELECT * FROM rombel where tapel='$tapel' and pai='$idp'";
+		$queryp = $connect->query($sqlp);
+		$ada = $queryp->num_rows;
 		$rmb="";
-		$ptn="Belum ada Kelas";
+		if($ada>0){
+			while($pn = $queryp->fetch_assoc()){
+			$rmb=$rmb.$pn['nama_rombel'].", ";
+			};
+		}else{
+			$rmb="";
+		};
+	}elseif($lvl==95){
+		$sqlp = "SELECT * FROM rombel where tapel='$tapel' and penjas='$idp'";
+		$queryp = $connect->query($sqlp);
+		$ada = $queryp->num_rows;
+		$rmb="";
+		if($ada>0){
+			while($pn = $queryp->fetch_assoc()){
+			$rmb=$rmb.$pn['nama_rombel'].", ";
+			};
+		}else{
+			$rmb="";
+		};
+	}elseif($lvl==94){
+		$sqlp = "SELECT * FROM rombel where tapel='$tapel' and inggris='$idp'";
+		$queryp = $connect->query($sqlp);
+		$ada = $queryp->num_rows;
+		$rmb="";
+		if($ada>0){
+			while($pn = $queryp->fetch_assoc()){
+			$rmb=$rmb.$pn['nama_rombel'].", ";
+			};
+		}else{
+			$rmb="";
+		};
+	}elseif($lvl==99){
+		$rmb="Kepala Sekolah";
+	}elseif($lvl==5){
+		$rmb="Tata Usaha";
+	}else{
+		$rmb="Operator Sekolah";
 	};
 	$niy=$row['niy_nigk'];
-	if(file_exists( $_SERVER{'DOCUMENT_ROOT'} . "/apins7/images/ptk/".$row['gambar'])){
-		$gbr="../images/ptk/".$row['gambar'];
+	if(file_exists( $_SERVER{'DOCUMENT_ROOT'} . "/images/ptk/".$row['gambar'])){
+		$gbr="../../images/ptk/".$row['gambar'];
 	}else{
-		$gbr="../images/user-default.png";
+		$gbr="../../images/user-default.png";
 	};
 	$actionButton = '
-	<a href="editptk.php?idp='.$idp.'" class="btn btn-effect-ripple btn-xs btn-success"><i class="fas fa-edit"></i></a>
-	<button class="btn btn-effect-ripple btn-xs btn-danger" type="button" data-toggle="modal" data-target="#outMemberModal" onclick="outMember('.$ids.')"><i class="fas fa-user-times"></i></button>
+	<ul class="pagination pg-primary">
+	<li class="page-item"><a href="editptk.php?idp='.$idp.'" class="btn btn-info btn-border btn-round btn-sm"><i class="fas fa-edit"></i></a></li>
+	<li class="page-item"><button data-target="#myModal" class="btn btn-info btn-border btn-round btn-sm" type="button" data-toggle="modal" data-id="'.$ids.'"><i class="fas fa-user-times"></i></button></li>
+	</ul>
 	';
 	
 	$foto='<img src="'.$gbr.'" class="img-circle" alt="User Image" height="30px" width="30px">';
@@ -52,7 +103,7 @@ while ($row = $query->fetch_assoc()) {
 		$row['nik'],
 		$row['niy_nigk'],
 		$row['nuptk'],
-		$ptn,
+		$rmb,
 		$actionButton
 	);
 }

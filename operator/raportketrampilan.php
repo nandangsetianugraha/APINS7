@@ -125,7 +125,7 @@ $mpm=mysqli_fetch_array(mysqli_query($koneksi, "select * from mapel where id_map
 			
 			$.ajax({
 				type : 'GET',
-				url : 'mpl.php',
+				url : 'mapel.php',
 				data :  'kelas=' +kelas,
 				beforeSend: function()
 				{	

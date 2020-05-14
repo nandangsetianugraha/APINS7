@@ -64,13 +64,36 @@ if($level==98){ //guru kelas
 						<div class="col-md-3">
 							<div class="form-group form-group-default">
 								<label>Kelas</label>
-								<?php if($level==94 or $level==95 or $level==96){?>
+								<input type="hidden" name="tapel" id="tapel" class="form-control" value="<?=$tapel;?>" placeholder="Username">
+								<input type="hidden" name="smt" id="smt" class="form-control" value="<?=$smt;?>" placeholder="Username">
+								<?php if($level==96){?>
 								<select class="form-control" id="kelas" name="kelas">
+									<option value="0">Pilih Rombel</option>
 									<?php 
-									$sql_mk=mysqli_query($koneksi, "select * from rombel where tapel='$tapel' order by nama_rombel asc");
+									$sql_mk=mysqli_query($koneksi, "select * from rombel where tapel='$tapel' and pai='$idku' order by nama_rombel asc");
 									while($nk=mysqli_fetch_array($sql_mk)){
 									?>
-									<option value="<?=$nk['nama_rombel'];?>" <?php if($nk['nama_rombel']==$romb){echo "selected";}; ?>><?=$nk['nama_rombel'];?></option>
+									<option value="<?=$nk['nama_rombel'];?>"><?=$nk['nama_rombel'];?></option>
+									<?php };?>
+								</select>
+								<?php }elseif($level==95){ ?>
+								<select class="form-control" id="kelas" name="kelas">
+									<option value="0">Pilih Rombel</option>
+									<?php 
+									$sql_mk=mysqli_query($koneksi, "select * from rombel where tapel='$tapel' and penjas='$idku' order by nama_rombel asc");
+									while($nk=mysqli_fetch_array($sql_mk)){
+									?>
+									<option value="<?=$nk['nama_rombel'];?>"><?=$nk['nama_rombel'];?></option>
+									<?php };?>
+								</select>
+								<?php }elseif($level==94){ ?>
+								<select class="form-control" id="kelas" name="kelas">
+									<option value="0">Pilih Rombel</option>
+									<?php 
+									$sql_mk=mysqli_query($koneksi, "select * from rombel where tapel='$tapel' and inggris='$idku' order by nama_rombel asc");
+									while($nk=mysqli_fetch_array($sql_mk)){
+									?>
+									<option value="<?=$nk['nama_rombel'];?>"><?=$nk['nama_rombel'];?></option>
 									<?php };?>
 								</select>
 								<?php }else{ ?>
@@ -181,7 +204,7 @@ if($level==98){ //guru kelas
 			//Mengambil value dari option select mp kemudian parameternya dikirim menggunakan ajax
 			var mp = $('#mp').val();
 			var kelas=$('#kelas').val();
-			var smt=<?=$smt;?>;
+			var smt=$('#smt').val();
 			var peta=<?=$peta;?>;
 			
 			$.ajax({
@@ -201,7 +224,7 @@ if($level==98){ //guru kelas
 			//Mengambil value dari option select mp kemudian parameternya dikirim menggunakan ajax
 			var mp = $('#mp').val();
 			var kelas=$('#kelas').val();
-			var smt=<?=$smt;?>;
+			var smt=$('#smt').val();
 			var peta=<?=$peta;?>;
 			var tema=$('#tema').val();
 			
@@ -240,7 +263,7 @@ if($level==98){ //guru kelas
 			var kd = $('#kd').val();
 			var mp = $('#mp').val();
 			var kelas=$('#kelas').val();
-			var smt=<?=$smt;?>;
+			var smt=$('#smt').val();
 			var peta=<?=$peta;?>;
 			var tema=$('#tema').val();
 			var tapel=$('#tapel').val();
@@ -287,7 +310,7 @@ if($level==98){ //guru kelas
 			//Mengambil value dari option select mp kemudian parameternya dikirim menggunakan ajax
 			var mp = $('#mp').val();
 			var kelas=$('#kelas').val();
-			var smt=<?=$smt;?>;
+			var smt=$('#smt').val();
 			var peta=<?=$peta;?>;
 			
 			$.ajax({
@@ -308,7 +331,7 @@ if($level==98){ //guru kelas
 			//Mengambil value dari option select mp kemudian parameternya dikirim menggunakan ajax
 			var mp = $('#mp').val();
 			var kelas=$('#kelas').val();
-			var smt=<?=$smt;?>;
+			var smt=$('#smt').val();
 			var peta=<?=$peta;?>;
 			var tema=$('#tema').val();
 			
@@ -348,7 +371,7 @@ if($level==98){ //guru kelas
 			var kd = $('#kd').val();
 			var mp = $('#mp').val();
 			var kelas=$('#kelas').val();
-			var smt=<?=$smt;?>;
+			var smt=$('#smt').val();
 			var peta=<?=$peta;?>;
 			var tema=$('#tema').val();
 			var tapel=$('#tapel').val();

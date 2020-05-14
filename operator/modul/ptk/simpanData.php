@@ -5,8 +5,8 @@ require_once '../../../assets/db_connect.php';
 if($_POST) {	
 
 	$validator = array('success' => false, 'messages' => array());
-	$username=$_POST['username'];
-	$password=$_POST['password'];
+	$username=strip_tags($connect->real_escape_string($_POST['username']));
+	$password=strip_tags($connect->real_escape_string($_POST['password']));
 	$ptkid=$_POST['ptkid'];
 	if(empty($username) || empty($password)){
 		$validator['success'] = false;
@@ -32,7 +32,7 @@ if($_POST) {
 			$cks1 = $query1->fetch_assoc();
 			$level=$cks1['jenis_ptk_id'];
 			$namalengkap=$cks1['nama'];
-			$sql2 = "INSERT INTO pengguna VALUES('$ptkid','$username','$password','$namalengkap','$level','1')";
+			$sql2 = "INSERT INTO pengguna VALUES('$ptkid','$username','$password','$namalengkap','$level','user-default.png')";
 			$query2 = $connect->query($sql2);
 			if($query2 === TRUE) {			
 				$validator['success'] = true;
