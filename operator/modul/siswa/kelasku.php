@@ -50,8 +50,5 @@ while ($row = $query->fetch_assoc()) {
 		$actionButton
 	);
 }
-
-// database connection close
 $connect->close();
-
 echo json_encode($output);

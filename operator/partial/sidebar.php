@@ -41,7 +41,7 @@
 							<span class="sidebar-mini-icon">
 								<i class="fa fa-ellipsis-h"></i>
 							</span>
-							<h4 class="text-section">Components</h4>
+							<h4 class="text-section">Menu</h4>
 						</li>
 						<li class="nav-item">
 							<a href="./">
@@ -220,6 +220,12 @@
 									</li>
 								</ul>
 							</div>
+						</li>
+						<li class="nav-item">
+							<a href="cekraport.php">
+								<i class="fas fa-book-reader"></i>
+								<p>Cek Raport Kelas 6</p>
+							</a>
 						</li>
 					</ul>
 				</div>

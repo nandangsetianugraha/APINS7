@@ -397,16 +397,16 @@ if($level==98){ //guru kelas
 	function highlightEdit(editableObj) {
 		$(editableObj).css("background","#FFF0000");
 	} 
-	function saveHarian(editableObj,column,id,kelas,smt,tapel,mpid,kd,jns,tema) {
+	function saveDK4(editableObj,column,id,kelas,smt,tapel,mpid,kd,jns,tema) {
 		// no change change made then return false
 		if($(editableObj).attr('data-old_value') === editableObj.innerHTML)
 		return false;
 		// send ajax to update value
 		$(editableObj).css("background","#FFF url(loader.gif) no-repeat right");
 		$.ajax({
-			url: "modul/harian/saveHarian.php",
+			url: "modul/harian/saveKet.php",
 			cache: false,
-			data:'column='+column+'&value='+editableObj.innerHTML+'&id='+id+'&kelas='+kelas+'&smt='+smt+'&tapel='+tapel+'&mp='+mpid+'&kd='+kd+'&jns='+jns+'&tema='+tema,
+			data:'column='+column+'&value='+editableObj.innerHTML+'&id='+id+'&kelas='+kelas+'&smt='+smt+'&tapel='+tapel+'&mp='+mpid+'&tema='+tema+'&kd='+kd+'&jns='+jns,
 			success: function(response)  {
 				console.log(response);
 				// set updated value as old value

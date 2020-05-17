@@ -22,10 +22,10 @@ function TanggalIndo($tanggal)
  include 'easyTable.php';
  include '../assets/db_connect.php';
 $id=$_GET['id'];
-$idptk=$_GET['idptk'];
 $sqls = "select * from sk where id_sk='$id'";
 $querys = $connect->query($sqls);
 $sk=$querys->fetch_assoc();
+$idptk=$sk['ptk_id'];
 $sqln = "select * from ptk where ptk_id='$idptk'";
 $queryn = $connect->query($sqln);
 $ptk=$queryn->fetch_assoc();

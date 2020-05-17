@@ -251,7 +251,7 @@ var SKTable;
 $(document).ready(function(){
 	SKTable = $("#SKTable").DataTable({
 			"destroy":true,
-			"ajax": "modul/ptk/lihatSK.php?idp=<?=$idp;?>",
+			"ajax": "modul/ptk/lihatSK.php?idp=<?=$idku;?>",
 			"order": []
 		});	$image_crop = $('#image_demo').croppie({
     enableExif: true,

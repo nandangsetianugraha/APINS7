@@ -20,10 +20,10 @@ while ($row = $query->fetch_assoc()) {
 	$idp=$row['ptk_id'];
 	$sqlp = "SELECT * FROM ptk where ptk_id='$idp'";
 	$queryp = $connect->query($sqlp)->fetch_assoc();
-	if(file_exists( $_SERVER{'DOCUMENT_ROOT'} . "/apins7/images/ptk/".$queryp['gambar'])){
-		$gbr="../images/ptk/".$queryp['gambar'];
+	if(file_exists( $_SERVER{'DOCUMENT_ROOT'} . "/images/ptk/".$queryp['gambar'])){
+		$gbr="../../images/ptk/".$queryp['gambar'];
 	}else{
-		$gbr="../images/user-default.png";
+		$gbr="../../images/user-default.png";
 	};
 	$actionButton = '
 	<button class="btn btn-effect-ripple btn-xs btn-danger" type="button" data-toggle="modal" data-target="#outMemberModal" onclick="outMember('.$idp.')"><i class="fas fa-user-times"></i></button>

@@ -221,6 +221,16 @@
 								</ul>
 							</div>
 						</li>
+						<?php 
+						if($ab==6){
+						?>
+						<li class="nav-item">
+							<a href="cekraport.php">
+								<i class="fas fa-book-reader"></i>
+								<p>Cek Raport Kelas 6</p>
+							</a>
+						</li>
+						<?php }; ?>
 					</ul>
 				</div>
 			</div>
