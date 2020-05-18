@@ -1,7 +1,7 @@
 <?php 
 
 require_once '../../../assets/db_connect.php';
-//if form is submitted
+
 if($_POST) {	
 
 	$validator = array('success' => false, 'messages' => array());
@@ -19,8 +19,7 @@ if($_POST) {
 			$validator['success'] = true;
 			$validator['messages'] = "Data Siswa berhasil diperbaharui!";		
 	};
-	
-	// close the database connection
+
 	$connect->close();
 
 	echo json_encode($validator);

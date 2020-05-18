@@ -31,7 +31,7 @@ while ($row = $query->fetch_assoc()) {
 	$queryp = $connect->query($sqlp);
 	$pn = $queryp->num_rows;
 	$nisn=$row['nisn'];
-	$jk=$row['jk'];	$nkelas = $connect->query("SELECT * FROM penempatan WHERE peserta_didik_id='$idp' and tapel='$ntapel'")->fetch_assoc();
+	$jk=$row['jk'];	$adakelas = $connect->query("SELECT * FROM penempatan WHERE peserta_didik_id='$idp' and tapel='$ntapel'")->num_rows;	if($adakelas>0){	$nkelas = $connect->query("SELECT * FROM penempatan WHERE peserta_didik_id='$idp' and tapel='$ntapel'")->fetch_assoc();	$kelasnya=$nkelas['rombel'];	}else{		$kelasnya="";	};
 	if(file_exists( $_SERVER{'DOCUMENT_ROOT'} . "/cp/siswa/".$nisn.".jpg")){
 		$gbr="../siswa/$nisn.jpg";
 	}else{
@@ -48,13 +48,11 @@ while ($row = $query->fetch_assoc()) {
 		';
 		$tgl=$row['tempat'].", ".TanggalIndo($row['tanggal']);
 		$output['data'][] = array(
-			$row['nama'],			$jk,			$nkelas['rombel'],
+			$row['nama'],			$jk,			$kelasnya,
 			$actionButton
 		);
 	}
-}
-
-// database connection close
+}
 $connect->close();
 
 echo json_encode($output);

@@ -93,7 +93,222 @@ $namafilenya="Raport ".$siswa['nama']." - ".$tahun1."".$tahun2."-".$smts.".pdf";
  $table2->printRow();
  $table2->endTable();
 
+//halaman 2
+$id_prov=$siswa['provinsi'];
+$id_kab=$siswa['kabupaten'];
+$id_kec=$siswa['kecamatan'];
+$id_des=$siswa['kelurahan'];
+$prov=$connect->query("select * from provinsi where id_prov='$id_prov'")->fetch_assoc();
+$kab=$connect->query("select * from provinsi where id='$id_kab'")->fetch_assoc();
+$kec=$connect->query("select * from provinsi where id='$id_kec'")->fetch_assoc();
+$des=$connect->query("select * from provinsi where id='$id_des'")->fetch_assoc();
+ $pdf->AddPage(); 
+ $pdf->SetFont('helvetica','',12);
 
+ $table2=new easyTable($pdf, 1);
+ $table2->rowStyle('font-size:15; font-style:B;');
+ $table2->easyCell('IDENTITAS PESERTA DIDIK', 'align:C;');
+ $table2->printRow();
+ $table2->endTable(10);
+ 
+ $table3=new easyTable($pdf, '{60, 8, 1, 110}','align:L');
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Nama Peserta Didik');
+ $table3->easyCell(':');
+ $table3->easyCell('');
+ $table3->easyCell($siswa['nama'],'border:B;font-style:B');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('NIS');
+ $table3->easyCell(':');
+ $table3->easyCell('');
+ $table3->easyCell($siswa['nis'],'border:B;font-style:B');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('NISN');
+ $table3->easyCell(':');
+ $table3->easyCell('');
+ $table3->easyCell($siswa['nisn'],'border:B;font-style:B');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Tempat, Tanggal Lahir');
+ $table3->easyCell(':');
+ $table3->easyCell('');
+ $table3->easyCell($siswa['tempat'].', '.TanggalIndo($siswa['tanggal']),'border:B;font-style:B');
+ $table3->printRow();
+ 
+ if($siswa['jk']==="L"){
+	 $kelam="Laki-laki";
+ }else{
+	 $kelam="Perempuan";
+ };
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Jenis Kelamin');
+ $table3->easyCell(':');
+ $table3->easyCell('');
+ $table3->easyCell($kelam,'border:B;font-style:B');
+ $table3->printRow();
+ 
+ $idag=$siswa['agama'];
+ $pag=$connect->query("select * from agama where id_agama='$idag'")->fetch_assoc();
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Agama');
+ $table3->easyCell(':');
+ $table3->easyCell('');
+ $table3->easyCell($pag['nama_agama'],'border:B;font-style:B');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Pendidikan Sebelumnya');
+ $table3->easyCell(':');
+ $table3->easyCell('');
+ $table3->easyCell($siswa['pend_sebelum'],'border:B;font-style:B');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Alamat Peserta Didik');
+ $table3->easyCell(':');
+ $table3->easyCell('');
+ $table3->easyCell($siswa['alamat'],'border:B;font-style:B');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('.');
+ $table3->easyCell('');
+ $table3->easyCell('');
+ $table3->easyCell('','border:B;font-style:B');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Nama Orang Tua');
+ $table3->easyCell('');
+ $table3->easyCell('');
+ $table3->easyCell('');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Ayah');
+ $table3->easyCell(':');
+ $table3->easyCell('');
+ $table3->easyCell($siswa['nama_ayah'],'border:B;font-style:B');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Ibu');
+ $table3->easyCell(':');
+ $table3->easyCell('');
+ $table3->easyCell($siswa['nama_ibu'],'border:B;font-style:B');
+ $table3->printRow();
+ 
+ $idpa=$siswa['pek_ayah'];
+ $peka=$connect->query("select * from pekerjaan where id_pekerjaan='$idpa'")->fetch_assoc();
+ $idpi=$siswa['pek_ibu'];
+ $peki=$connect->query("select * from pekerjaan where id_pekerjaan='$idpi'")->fetch_assoc();
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Pekerjaan Orang Tua');
+ $table3->easyCell('');
+ $table3->easyCell('');
+ $table3->easyCell('');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Ayah');
+ $table3->easyCell(':');
+ $table3->easyCell('');
+ $table3->easyCell($peka['nama_pekerjaan'],'border:B;font-style:B');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Ibu');
+ $table3->easyCell(':');
+ $table3->easyCell('');
+ $table3->easyCell($peki['nama_pekerjaan'],'border:B;font-style:B');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Alamat Orang Tua');
+ $table3->easyCell('');
+ $table3->easyCell('');
+ $table3->easyCell('');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Jalan');
+ $table3->easyCell(':');
+ $table3->easyCell('');
+ $table3->easyCell($siswa['jalan'],'border:B;font-style:B');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Kelurahan/Desa');
+ $table3->easyCell(':');
+ $table3->easyCell('');
+ $table3->easyCell($des['nama'],'border:B;font-style:B');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Kecamatan');
+ $table3->easyCell(':');
+ $table3->easyCell('');
+ $table3->easyCell($kec['nama'],'border:B;font-style:B');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Kabupaten/Kota');
+ $table3->easyCell(':');
+ $table3->easyCell('');
+ $table3->easyCell('Indramayu','border:B;font-style:B');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Provinsi');
+ $table3->easyCell(':');
+ $table3->easyCell('');
+ $table3->easyCell('Jawa Barat','border:B;font-style:B');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Wali Peserta Didik');
+ $table3->easyCell('');
+ $table3->easyCell('');
+ $table3->easyCell('');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Nama');
+ $table3->easyCell(':');
+ $table3->easyCell('');
+ $table3->easyCell('','border:B;font-style:B');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Pekerjaan');
+ $table3->easyCell(':');
+ $table3->easyCell('');
+ $table3->easyCell('','border:B;font-style:B');
+ $table3->printRow();
+ 
+ $table3->rowStyle('font-size:12');
+ $table3->easyCell('Alamat');
+ $table3->easyCell(':');
+ $table3->easyCell('');
+ $table3->easyCell('','border:B;font-style:B');
+ $table3->printRow();
+ $table3->endTable(15);
+ 
+ $table3=new easyTable($pdf, '{10, 30, 20, 8, 1, 110}','align:L');
+ $table3->rowStyle('font-size:12;min-height:40');
+ $table3->easyCell('');
+ $table3->easyCell("Pas Foto\nUkuran\n3x4",'border:1;align:C;valign:M;font-style:B');
+ $table3->easyCell('');
+ $table3->easyCell('');
+ $table3->easyCell('');
+ $table3->easyCell(".....................................................\nKepala Sekolah\n\n\n\n\n\n_________________________________\nNIP. .........................");
+ $table3->printRow();
+ $table3->endTable(15);
 
 //halaman 3
  $pdf->AddPage(); 

@@ -44,9 +44,15 @@ $ab=substr($romb, 0, 1);
 								<div class="card-tools">
 									<a href="#" data-toggle="modal" data-toggle="modal" data-target="#penempatan" class="btn btn-info btn-border btn-round btn-sm">
 										<span class="btn-label">
-											<i class="fa fa-print"></i>
+											<i class="fas fa-indent"></i>
 										</span>
 										Penempatan
+									</a>
+									<a href="siswabaru.php" class="btn btn-info btn-border btn-round btn-sm">
+										<span class="btn-label">
+											<i class="fas fa-id-card"></i>
+										</span>
+										Siswa Baru
 									</a>
 								</div>
 							</div>
@@ -181,6 +187,8 @@ $ab=substr($romb, 0, 1);
           </div>
           <!-- /.modal-dialog -->
         </div>
+		
+		
 		
 		<!-- Custom template | don't include it in your project! -->
 		<!-- End Custom template -->
