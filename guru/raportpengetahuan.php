@@ -128,6 +128,20 @@ $mpm=mysqli_fetch_array(mysqli_query($koneksi, "select * from mapel where id_map
 							<?php }; ?>
 							</div>
 						</div>
+						<div class="col-md-3">
+							<div class="form-group form-group-default">
+							<label>KKM Sekolah</label>
+							<?php
+							$mkkm=mysqli_fetch_array(mysqli_query($koneksi, "select min(nilai) as kkmsekolah from kkm where tapel='$tapel'"));
+							if(empty($mkkm['kkmsekolah'])){
+								$kkmsaya=0;
+							}else{
+								$kkmsaya=$mkkm['kkmsekolah'];
+							};
+							?>
+							<input type="text" class="form-control" value="<?=$kkmsaya;?>">
+							</div>
+						</div>
 					</div> <!--Akhir Row-->
 					<div class="card">
 						<div class="card-body">

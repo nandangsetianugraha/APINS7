@@ -79,14 +79,14 @@ $ab=substr($kelas, 0, 1);
 			$kkmsaya=$mkkm['kkmsekolah'];
 		};
 		$jarak=round((100-$kkmsaya)/3,0);
-		$renA=100-$jarak;
-		$renB=$renA-$jarak;
-		$renC=$renB-$jarak;
+		$renC=$kkmsaya;
+		$renB=$renC+$jarak;
+		$renA=$renB+$jarak;
 		if($nakhir>$renA){
 			$predikat="A";
 		}elseif($nakhir>$renB){
 			$predikat="B";
-		}elseif($nakhir>$renC){
+		}elseif($nakhir>=$renC){
 			$predikat="C";
 		}else{
 			$predikat="D";

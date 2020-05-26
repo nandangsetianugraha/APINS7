@@ -19,34 +19,49 @@ function TanggalIndo($tanggal)
 	return $split[2] . ' ' . $bulan[ (int)$split[1]-1 ] . ' ' . $split[0];
 };
 $output = array('data' => array());
-$kelas=$_GET['kelas'];
 $smt=$_GET['smt'];
 $tapel=$_GET['tapel'];
-$sql = "select * from penempatan where rombel='$kelas' and tapel='$tapel' order by nama asc";
+$sql = "select * from siswa where status='1' order by nama asc";
 $query = $connect->query($sql);
 while ($row = $query->fetch_assoc()) {
 	$idp=$row['peserta_didik_id'];
-	$sqlp = "SELECT * FROM siswa WHERE peserta_didik_id='$idp'";
+	$sqlp = "SELECT * FROM penempatan WHERE peserta_didik_id='$idp' and tapel='$tapel'";
+	$apn = $connect->query($sqlp)->num_rows;
+	if($apn>0){
 	$pn = $connect->query($sqlp)->fetch_assoc();
-	$nisn=$pn['nisn'];
-	$jk=$pn['jk'];
-	$ids=$pn['id'];
-	$rmb=$row['rombel'];
+	$rmb=$pn['rombel'];
+	}else{
+		$rmb="";
+	};
+	$nisn=$row['nisn'];
+	$jk=$row['jk'];
+	$ids=$row['id'];
+	if($apn>0){
 	$actionButton = '
 		<ul class="pagination pg-primary">
-		<li class="page-item"><button data-target="#myModal" class="btn btn-info btn-border btn-round btn-sm" type="button" id="'.$ids.'" data-toggle="modal" data-id="'.$ids.'"><i class="fa fa-edit"></i> Edit</button></li>
-		<li class="page-item"><button class="btn btn-info btn-border btn-round btn-sm" type="button" data-toggle="modal" data-target="#outMemberModal" onclick="outMember('.$row['id_rombel'].')"><i class="fa fa-trash"></i> Out</button></li>
-		<li class="page-item"><a href="../cetak/cetakNISN.php?idp='.$ids.'" class="btn btn-info btn-border btn-round btn-sm" type="button" target="_blank"><i class="fa fa-print"></i> NISN</a></li>
+		<li class="page-item"><button data-target="#myModal" class="btn btn-info btn-border btn-round btn-sm" type="button" id="'.$ids.'" data-toggle="modal" data-id="'.$ids.'"><i class="fa fa-edit"></i></button></li>
+		<li class="page-item"><button class="btn btn-info btn-border btn-round btn-sm" type="button" data-toggle="modal" data-target="#outMemberModal" onclick="outMember('.$pn['id_rombel'].')"><i class="fa fa-trash"></i></button></li>
+		<li class="page-item"><button data-target="#MutasiModal" class="btn btn-info btn-border btn-round btn-sm" type="button" data-toggle="modal" data-id="'.$ids.'"><i class="fas fa-user-times"></i></button></li>
 		</ul>
 		';
-	$tgl=$pn['tempat'].", ".TanggalIndo($pn['tanggal']);
-	$namasis=$pn['nama'];
+	}else{
+	$actionButton = '
+		<ul class="pagination pg-primary">
+		<li class="page-item"><button data-target="#myModal" class="btn btn-info btn-border btn-round btn-sm" type="button" id="'.$ids.'" data-toggle="modal" data-id="'.$ids.'"><i class="fa fa-edit"></i></button></li>
+		<li class="page-item"><button class="btn btn-info btn-border btn-round btn-sm" data-toggle="modal" data-target="#penempatanMemberModal" onclick="penempatanMember('.$row['id'].')"><i class="fas fa-indent"></i></button></li>
+		<li class="page-item"><button data-target="#MutasiModal" class="btn btn-info btn-border btn-round btn-sm" type="button" data-toggle="modal" data-id="'.$ids.'"><i class="fas fa-user-times"></i></button></li>
+		</ul>
+		';
+	};
+	$tgl=$row['tempat'].", ".TanggalIndo($row['tanggal']);
+	$namasis=$row['nama'];
 	$output['data'][] = array(
-		$pn['nama'],
-		$pn['nis'],
-		$pn['nisn'],
+		$row['nama'],
+		$row['nis'],
+		$row['nisn'],
 		$tgl,
-		$pn['jk'],
+		$row['jk'],
+		$rmb,
 		$actionButton
 	);
 }

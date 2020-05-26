@@ -48,41 +48,35 @@ $logologin=$esmanis['image_login'];
 				
 				<form id="form-login" method="post" class="login100-form validate-form">
 					<span class="login100-form-title p-b-43">
-						<p class="info"></p> <img src="../assets/img/icon.png"/> APINS
+						<img src="../assets/img/icon.png"/> APINS
 					</span>
-					
-					
-					<div class="wrap-input100 validate-input" data-validate = "Username minimal 3 huruf">
-						<input class="input100" type="hidden" id="tpl" name="tpl" value="<?=$tpl_aktif;?>">
-						<input class="input100" type="text" name="username" id="username" autofocus autocomplete=off>
-						<span class="focus-input100"></span>
-						<span class="label-input100">Username</span>
-					</div>
-					
-					
-					<div class="wrap-input100 validate-input" data-validate="Password tidak boleh kosong">
-						<input class="input100" type="password" name="password" id="password">
-						<span class="focus-input100"></span>
-						<span class="label-input100">Password</span>
-					</div>
-
-					<div class="flex-sb-m w-full p-t-3 p-b-32">
-						<div class="contact100-form-checkbox">
-							
+					<p class="info"></p>
+					<div class="tampil">
+						<div class="wrap-input100 validate-input" data-validate = "Username minimal 3 huruf">
+							<input class="input100" type="hidden" id="tpl" name="tpl" value="<?=$tpl_aktif;?>">
+							<input class="input100" type="text" name="username" id="username" autofocus autocomplete=off>
+							<span class="focus-input100"></span>
+							<span class="label-input100">Username</span>
 						</div>
-
-						<div>
-							<a href="../../" class="txt1">
-								Halaman Depan
-							</a>
+						<div class="wrap-input100 validate-input" data-validate="Password tidak boleh kosong">
+							<input class="input100" type="password" name="password" id="password">
+							<span class="focus-input100"></span>
+							<span class="label-input100">Password</span>
 						</div>
-					</div>
-			
-
-					<div class="container-login100-form-btn">
-						<button name="Submit" id="submit" id="login-btn" class="login100-form-btn informasi">
-							Login
-						</button>
+						<div class="flex-sb-m w-full p-t-3 p-b-32">
+							<div class="contact100-form-checkbox">
+							</div>
+							<div>
+								<a href="../../" class="txt1">
+									Halaman Depan
+								</a>
+							</div>
+						</div>
+						<div class="container-login100-form-btn">
+							<button name="Submit" id="submit" id="login-btn" class="login100-form-btn informasi">
+								Login
+							</button>
+						</div>
 					</div>
 				</form>
 				
@@ -115,6 +109,7 @@ $logologin=$esmanis['image_login'];
 <script type="text/javascript">
 		jQuery(document).ready(function(){
 			$(".info-login").hide();
+			$(".tampil").show();
 			jQuery("#form-login").submit(function(e){
 				e.preventDefault();
 				var formData = jQuery(this).serialize();
@@ -125,7 +120,8 @@ $logologin=$esmanis['image_login'];
 					data: formData,
 					beforeSend: function()
 						{	
-							$(".informasi").html('<i class="fa fa-spinner fa-pulse fa-fw"></i> Loading ...');
+							$(".info").html('<div class="alert alert-success alert-dismissible fade show" role="alert"><h4 class="alert-heading"><i class="fa fa-spinner fa-pulse fa-fw"></i> Loading ...</h4></div>');
+							$(".tampil").hide();
 						},
 					success: function(res){
 						response = $.parseJSON(res);
@@ -151,7 +147,8 @@ $logologin=$esmanis['image_login'];
 							
 						}else{
 							$(".informasi").html('Login');
-							$(".info").html('<div class="alert alert-warning alert-dismissible fade show" role="alert"><strong>Error!</strong> Username atau Password yang Anda masukkan salah!!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+							$(".info").html('<div class="alert alert-warning alert-dismissible fade show" role="alert"><strong>Error!</strong> Username atau Password yang Anda masukkan salah!!</div>');
+							$(".tampil").show();
 						};
 					}
 					});

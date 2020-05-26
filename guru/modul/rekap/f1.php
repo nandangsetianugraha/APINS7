@@ -14,18 +14,19 @@ $qkl = $connect->query($skl);
 //$hasil=$query->num_rows;
 while($s=$qkl->fetch_assoc()) {
 	$idpel=$s['id_mapel'];
-	$kkm=$connect->query("select * from kkm where kelas='$kelas' and tapel='$tapel' and mapel='$idpel'")->fetch_assoc();
-		if(empty($kkm['nilai'])){
-			$kkmsaya=0;
-		}else{
-			$kkmsaya=$kkm['nilai'];
-		};
-	if($jns=="1"){
-		$dataf = $connect->query("select MIN(nilai) as nmin, MAX(nilai) as nmax, AVG(nilai) as rerata from temp_pts where kelas='$kelas' and smt='$smt' and tapel='$tapel' and mapel='$idpel'")->fetch_assoc();
+	if($ab<4 and ($idpel==5 or $idpel==6)){
 	}else{
-		$dataf = $connect->query("select MIN(nilai) as nmin, MAX(nilai) as nmax, AVG(nilai) as rerata from temp_pas where kelas='$kelas' and smt='$smt' and tapel='$tapel' and mapel='$idpel'")->fetch_assoc();
-	};
-	
+		$kkm=$connect->query("select * from kkm where kelas='$kelas' and tapel='$tapel' and mapel='$idpel'")->fetch_assoc();
+			if(empty($kkm['nilai'])){
+				$kkmsaya=0;
+			}else{
+				$kkmsaya=$kkm['nilai'];
+			};
+		if($jns=="1"){
+			$dataf = $connect->query("select MIN(nilai) as nmin, MAX(nilai) as nmax, AVG(nilai) as rerata from temp_pts where kelas='$kelas' and smt='$smt' and tapel='$tapel' and mapel='$idpel'")->fetch_assoc();
+		}else{
+			$dataf = $connect->query("select MIN(nilai) as nmin, MAX(nilai) as nmax, AVG(nilai) as rerata from temp_pas where kelas='$kelas' and smt='$smt' and tapel='$tapel' and mapel='$idpel'")->fetch_assoc();
+		};
 		$output['data'][] = array(
 			$s['nama_mapel'],
 			'100',
@@ -41,6 +42,7 @@ while($s=$qkl->fetch_assoc()) {
 			'Tuntas'
 		);
 	};
+};
 
 // database connection close
 $connect->close();

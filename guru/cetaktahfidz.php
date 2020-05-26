@@ -103,7 +103,7 @@ $ab=substr($romb, 0, 1);
 			
 			$.ajax({
 				type : 'GET',
-				url : '../cetak/cetakTahfidz.php',
+				url : 'modul/rekap/Tahfidz.php',
 				data :  'idp=' + idsis+'&kelas='+kelas+'&smt='+smt+'&tapel='+tapel,
 				beforeSend: function()
 				{	
@@ -116,7 +116,7 @@ $ab=substr($romb, 0, 1);
 					}else{
 					//jika data berhasil didapatkan, tampilkan ke dalam option select kd
 					$("#box").show();
-					$("#nilaiHarian").html("Sukses");
+					$("#nilaiHarian").html(data);
 					};
 				}
 			});
