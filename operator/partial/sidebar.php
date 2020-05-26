@@ -28,6 +28,11 @@
 										</a>
 									</li>
 									<li>
+										<a href="blog.php">
+											<span class="link-collapse">Blog Post</span>
+										</a>
+									</li>
+									<li>
 										<a href="konfig.php">
 											<span class="link-collapse">Settings</span>
 										</a>

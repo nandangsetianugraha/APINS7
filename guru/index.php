@@ -264,9 +264,25 @@ if($level==98 or $level==97){
 	$(document).ready(function() {
 		viewTr();
 		function viewTr(){
-				$.get("dataAbsen.php?bulan=<?=$bln;?>&tahun=<?=$thn;?>&tapel=<?=$tapel;?>&kelas=<?=$kelas;?>", function(data) {
+			var bulan = $('#bulan').val();
+			var tahun=$('#tahun').val();
+			var tapel=$('#tapel').val();
+			var kelas=$('#kelas').val();
+			
+			$.ajax({
+				type : 'GET',
+				url : 'dataAbsen.php',
+				data :  'bulan=' + bulan+'&tahun='+tahun+'&tapel='+tapel+'&kelas='+kelas,
+				beforeSend: function()
+				{	
+					$("#dataAbsen").html('<div class="alert alert-info alert-dismissible"><h4><i class="fa fa-spinner fa-pulse fa-fw"></i> Memuat Data Absensi Kelas....</h4></div>');
+				},
+				success: function (data) {
+
+					//jika data berhasil didapatkan, tampilkan ke dalam option select mp
 					$("#dataAbsen").html(data);
-				});
+				}
+			});
 		};
 		$('#bulan').change(function(){
 			//Mengambil value dari option select mp kemudian parameternya dikirim menggunakan ajax

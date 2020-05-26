@@ -204,10 +204,20 @@ $tanggal1 = $thn."-".$bln."-".$tgl;
 			var tahun=$('#tahun').val();
 			var tapel=$('#tapel').val();
 			var kelas=$('#kelas').val();
-			
-				$.get("dataAbsen.php?bulan="+kelas+"&tahun="+tahun+"&tapel="+tapel+"&kelas="+kelas, function(data) {
+			$.ajax({
+				type : 'GET',
+				url : 'dataAbsen.php',
+				data :  'bulan=' + bulan+'&tahun='+tahun+'&tapel='+tapel+'&kelas='+kelas,
+				beforeSend: function()
+				{	
+					$("#dataAbsen").html('<div class="alert alert-info alert-dismissible"><h4><i class="fa fa-spinner fa-pulse fa-fw"></i> Memuat Data Absensi Kelas....</h4></div>');
+				},
+				success: function (data) {
+
+					//jika data berhasil didapatkan, tampilkan ke dalam option select mp
 					$("#dataAbsen").html(data);
-				});
+				}
+			});
 		};
 		$('#kelas').change(function(){
 			//Mengambil value dari option select mp kemudian parameternya dikirim menggunakan ajax
