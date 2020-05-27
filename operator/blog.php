@@ -30,6 +30,30 @@
 					<div class="card">
 						
 						<div class="card-body">
+							<?php 
+						if(isset($_GET['status'])) {
+							if($_GET['status']==='kosong'){
+						?>
+							<div class="alert alert-danger alert-dismissible">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								<h4><i class="icon fa fa-ban"></i> Error</h4>
+								Isi Yang benar Bung
+							</div>
+						<?php
+								
+							};
+							if($_GET['status']==='gagal'){
+						?>
+							<div class="alert alert-danger alert-dismissible">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								<h4><i class="icon fa fa-ban"></i> Error</h4>
+								Gagal Bung!!
+							</div>
+						<?php
+								
+							};
+						};
+						?>
 							<div class="table-responsive">
 								<table id="manageMemberTable" class="table table-bordered table-hover">
                                     <thead>
@@ -66,7 +90,7 @@
 								</div>
 								<div class="form-group form-group-default">
 									<label>Judul</label>
-									<input type="text" class="form-control" name="judul">
+									<input type="text" class="form-control" name="judul" id="judul">
 								</div>
 								<div class="form-group form-group-default">
 									<label>Isi</label>
@@ -115,11 +139,7 @@
 	<script src="../assets/js/plugin/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 	<script>
 	$(function () {
-		// Replace the <textarea id="editor1"> with a CKEditor
-		// instance, using default configuration.
 		CKEDITOR.replace('editor1')
-		//bootstrap WYSIHTML5 - text editor
-		$('.textarea').wysihtml5()
 	});
 	var manageMemberTable;
 	$(document).ready(function() {
@@ -129,6 +149,53 @@
 		manageMemberTable = $("#manageMemberTable").DataTable({
 			"ajax": "modul/blog/daftarblog.php",
 			"order": []
+		});
+		$("#tambahArtikelForm").unbind('submit').bind('submit', function() {
+			var tanggal=$('#datepicker').val();
+			var judul=$('#judul').val();
+			var isi = CKEDITOR.instances.editor1.getData();
+			$.ajax({
+					url: 'modul/blog/tambahblog.php',
+					type: 'post',
+					data: {tanggal : tanggal,judul : judul, isi : isi},
+					dataType: 'json',
+					success:function(response) {
+						if(response.success == true) {						
+							$.notify({
+								icon: 'flaticon-alarm-1',
+								title: 'Sukses',
+								message: response.messages,
+								},{
+									type: 'info',
+									placement: {
+									from: "bottom",
+									align: "left"
+								},
+								time: 10,
+							});
+
+							manageMemberTable.ajax.reload(null, false);
+							$("#penempatan").modal('hide');
+							$("#tambahArtikelForm")[0].reset();
+							CKEDITOR.instances.editor1.setData('');
+						} else {
+							$.notify({
+								icon: 'flaticon-alarm-1',
+								title: 'Sukses',
+								message: response.messages,
+								},{
+									type: 'info',
+									placement: {
+									from: "bottom",
+									align: "left"
+								},
+								time: 10,
+							});
+						}
+					}
+				});
+
+			return false;
 		});
 	});
 	function outMember(id = null) {

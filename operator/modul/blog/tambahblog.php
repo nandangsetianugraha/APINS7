@@ -33,23 +33,19 @@ if($_POST) {
 	$slug=textToSlug($judul);
 	$isi=$_POST['isi'];
 	if(empty($tanggal) || empty($judul)){
-		header('location:../../pages/blog.php?status=kosong');
-		exit();
+		$validator['success'] = false;
+		$validator['messages'] = "Tanggal dan Judul tidak boleh kosong";
 	}else{
 			$sql2 = "INSERT INTO berita VALUES('','$waktu','$judul','$slug', '$isi')";
 			$query2 = $connect->query($sql2);
 			if($query2 === TRUE) {			
-				header('location:../../pages/blog.php?status=sukses');
-				exit();		
+				$validator['success'] = true;
+				$validator['messages'] = "Artikel baru telah ditambahkan";		
 			} else {		
-				header('location:../../pages/blog.php?status=gagal');
-				exit();
+				$validator['success'] = false;
+				$validator['messages'] = "Ada yang tidak beres";
 			};
 	};
-	
-	// close the database connection
 	$connect->close();
-
 	echo json_encode($validator);
-
 }
