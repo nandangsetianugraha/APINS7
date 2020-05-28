@@ -1,113 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<title>Maintenance</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/util.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
-<!--===============================================================================================-->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,intial-scale=1">
+	<title>Server Ditutup</title>
+
+	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet"> 
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-	
-	
-	<div class="bg-g1 size1 flex-w flex-col-c-sb p-l-15 p-r-15 p-t-55 p-b-35 respon1">
-		<span></span>
-		<div class="flex-col-c p-t-50 p-b-50">
-			<h3 class="l1-txt1 txt-center p-b-10">
-				Perbaikan
-			</h3>
+	<img class="fixed top-0 left-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1280&q=60">
+	<div class="fixed top-0 left-0 w-full h-full bg-blue-500 opacity-75"></div>
 
-			<p class="txt-center l1-txt2 p-b-60">
-				Input Nilai sudah ditutup
-			</p>
+	<div class="h-screen relative flex items-center justify-center">
+		<div class="flex lg:w-8/12 w-10/12 flex-col md:flex-row">
+			<img class="w-56 h-56 rounded-full mb-8 md:mb-0" src="maintenance.png">
+			<div class="md:ml-16 text-white">
+				<h1 class="text-3xl font-bold">Maintenance</h1>
+				<div class="uppercase tracking-widest font-light text-xs"></div>
+				<p class="mt-4 text-lg leading-relaxed">Server ditutup, Proses Input Nilai sudah ditutup!</p>
+				<div class="flex mt-10 items-center">
+					<!-- Button -->
+					<a class="text-center bg-pink-500 text-white rounded px-10 py-3 mr-4" href="../logout.php">
+						Logout
+					</a>
 
-			<div class="flex-w flex-c cd100 p-b-82">
-				<div class="flex-col-c-m size2 how-countdown">
-					<span class="l1-txt3 p-b-9 days">15</span>
-					<span class="s1-txt1">Days</span>
-				</div>
-
-				<div class="flex-col-c-m size2 how-countdown">
-					<span class="l1-txt3 p-b-9 hours">23</span>
-					<span class="s1-txt1">Hours</span>
-				</div>
-
-				<div class="flex-col-c-m size2 how-countdown">
-					<span class="l1-txt3 p-b-9 minutes">59</span>
-					<span class="s1-txt1">Minutes</span>
-				</div>
-
-				<div class="flex-col-c-m size2 how-countdown">
-					<span class="l1-txt3 p-b-9 seconds">59</span>
-					<span class="s1-txt1">Seconds</span>
+					<!-- Facebook -->
+					<a href="https://www.facebook.com/SDIslamAlJannah">
+						<svg class="mx-4" width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M18.75 2.08333H15.625C14.2437 2.08333 12.9189 2.63206 11.9422 3.60881C10.9654 4.58557 10.4167 5.91033 10.4167 7.29166V10.4167H7.29167V14.5833H10.4167V22.9167H14.5833V14.5833H17.7083L18.75 10.4167H14.5833V7.29166C14.5833 7.01539 14.6931 6.75044 14.8884 6.55509C15.0838 6.35974 15.3487 6.25 15.625 6.25H18.75V2.08333Z" fill="white"/>
+						</svg>
+					</a>
 				</div>
 			</div>
-			<button class="flex-c-m s1-txt2 size3 how-btn"  onclick="window.location.href = '../logout.php'">
-				Logout
-			</button>
 		</div>
-		
-		<span class="s1-txt3 txt-center">
-			Hubungi operator untuk membukanya.
-		</span>
-		
 	</div>
-
-	<!-- Modal Login -->
-	
-
-	
-
-<!--===============================================================================================-->	
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/bootstrap/js/popper.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor/countdowntime/moment.min.js"></script>
-	<script src="vendor/countdowntime/moment-timezone.min.js"></script>
-	<script src="vendor/countdowntime/moment-timezone-with-data.min.js"></script>
-	<script src="vendor/countdowntime/countdowntime.js"></script>
-	<script>
-		$('.cd100').countdown100({
-			// Set Endtime here
-			// Endtime must be > current time
-			endtimeYear: 0,
-			endtimeMonth: 0,
-			endtimeDate: 15,
-			endtimeHours: 13,
-			endtimeMinutes: 0,
-			endtimeSeconds: 0,
-			timeZone: "" 
-			// ex:  timeZone: "America/New_York", can be empty
-			// go to " http://momentjs.com/timezone/ " to get timezone
-		});
-	</script>
-<!--===============================================================================================-->
-	<script src="vendor/tilt/tilt.jquery.min.js"></script>
-	<script >
-		$('.js-tilt').tilt({
-			scale: 1.1
-		})
-	</script>
-<!--===============================================================================================-->
-	<script src="js/main.js"></script>
-
 </body>
 </html>
