@@ -81,6 +81,15 @@ $smt=isset($_GET['smt']) ? $_GET['smt'] : $smt_aktif;
 												</select>
 											</div>
 										</div>
+										<div class="col-md-4">
+											<div class="form-group form-group-default">
+												<label>Maintenance</label>
+												<select class="form-control" name="maintenis">
+													<option value="0" <?php if($esmanis['maintenis']=="0"){echo "selected";};?>>Tidak</option>
+													<option value="1" <?php if($esmanis['maintenis']=="1"){echo "selected";};?>>Ya</option>
+												</select>
+											</div>
+										</div>
 									</div>
 									<button type="submit" class="btn btn-info btn-border btn-round btn-sm">Simpan</button>
 									</form>

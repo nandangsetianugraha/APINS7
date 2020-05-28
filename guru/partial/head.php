@@ -32,6 +32,10 @@ $sekolah=$esmanis['nama_sekolah'];
 $alamat=$esmanis['alamat_sekolah'];
 $img_login=$esmanis['image_login'];
 $maintenis=$esmanis['maintenis'];
+if($maintenis==1){
+	header('location:./maintenance/');
+	exit();
+};
 $versi=$esmanis['versi'];
 $level=$_SESSION['level'];
 $idku=$_SESSION['userid'];

@@ -28,7 +28,7 @@ while ($row = $query->fetch_assoc()) {
 	$ids=$row['id'];
 	$actionButton = '
 		<ul class="pagination pg-primary">
-		<li class="page-item"><button data-target="#myModal" class="btn btn-info btn-border btn-round btn-sm" type="button" id="'.$ids.'" data-toggle="modal" data-id="'.$ids.'"><i class="fa fa-edit"></i> Edit</button></li>
+		<li class="page-item"><a href="alumni.php?idp='.$ids.'" class="btn btn-info btn-border btn-round btn-sm"><i class="fas fa-search"></i></a></li>
 		<li class="page-item"><button data-target="#MutasiModal" class="btn btn-info btn-border btn-round btn-sm" type="button" data-toggle="modal" data-id="'.$ids.'"><i class="fas fa-user-times"></i></button></li>
 		</ul>
 		';

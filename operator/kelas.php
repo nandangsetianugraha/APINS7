@@ -5,7 +5,6 @@ $romb = isset($_GET['kelas']) ? $_GET['kelas'] : '1A';
 $ab=substr($romb, 0, 1);
 ?>
 </head>
-<link rel="stylesheet" type="text/css" href="../assets/css/datatables.min.css"/>
 <body>
 	<div class="wrapper overlay-sidebar">
 		<?php include "partial/main-header.php"; ?>
@@ -28,15 +27,14 @@ $ab=substr($romb, 0, 1);
 										<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Aktif</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Lulus</a>
+										<a class="nav-link" href="lulus.php" role="tab" aria-controls="pills-profile" aria-selected="false">Lulus</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Mutasi</a>
+										<a class="nav-link" href="mutasi.php" role="tab" aria-controls="pills-contact" aria-selected="false">Mutasi</a>
 									</li>
 								</ul>
 							</div>
 							<div class="card-head-row">
-								<div class="card-title">Daftar Siswa</div>
 								<div class="card-tools">
 									<a href="#" data-toggle="modal" data-toggle="modal" data-target="#penempatan" class="btn btn-info btn-border btn-round btn-sm">
 										<span class="btn-label">
@@ -74,42 +72,8 @@ $ab=substr($romb, 0, 1);
 										</table>
 									</div>
 								</div>
-								<div class="tab-pane fade show" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-									<div class="table-responsive">
-										<table id="SiswaLulus" class="display table table-hover" >
-											<thead>
-											   <tr>
-													<th>Nama Siswa</th>
-													<th>NIS</th>
-													<th>NISN</th>
-													<th>TTL</th>
-													<th>JK</th>
-													<th></th>
-												</tr>
-											</thead>
-											<tbody>
-											</tbody>
-										</table>
-									</div>
-								</div>
-								<div class="tab-pane fade show" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-									<div class="table-responsive">
-										<table id="SiswaMutasi" class="display table table-hover" >
-											<thead>
-											   <tr>
-													<th>Nama Siswa</th>
-													<th>NIS</th>
-													<th>NISN</th>
-													<th>TTL</th>
-													<th>JK</th>
-													<th></th>
-												</tr>
-											</thead>
-											<tbody>
-											</tbody>
-										</table>
-									</div>
-								</div>
+								
+								
 							</div>
 						</div>
 					</div>
@@ -249,38 +213,16 @@ $ab=substr($romb, 0, 1);
 		<!-- End Custom template -->
 	</div>
 	<?php include "partial/foot.php"; ?>
-	<script type="text/javascript" src="../assets/js/datatables.min.js"></script>
 	<script>
 	
 	var manageMemberTable;
 	var managePenempatan;
-	var SiswaLulus;
-	var SiswaMutasi;
 	$(document).ready(function() {
 		manageMemberTable = $("#manageMemberTable").DataTable({
 			"destroy":true,
 			"searching": true,
 			"paging":true,
 			"ajax": "modul/siswa/kelasku.php?smt=<?=$smt;?>&tapel=<?=$tapel;?>",
-			"order": [],
-			dom: 'lBfrtip',
-			buttons: [
-				'excel', 'csv', 'pdf', 'copy'
-			],
-			"lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ]
-		});
-		SiswaLulus = $("#SiswaLulus").DataTable({
-			"destroy":true,
-			"searching": true,
-			"paging":true,
-			"ajax": "modul/siswa/lulus.php",
-			"order": []
-		});
-		SiswaMutasi = $("#SiswaMutasi").DataTable({
-			"destroy":true,
-			"searching": true,
-			"paging":true,
-			"ajax": "modul/siswa/mutasi.php",
 			"order": []
 		});
 		managePenempatan = $("#managePenempatan").DataTable({
@@ -360,8 +302,6 @@ $ab=substr($romb, 0, 1);
 				
 					// reload the datatables
 						manageMemberTable.ajax.reload(null, false);
-						SiswaMutasi.ajax.reload(null, false);
-						SiswaLulus.ajax.reload(null, false);
 						// this function is built in function of datatables;
 						// remove the error 
 						$("#MutasiModal").modal('hide');
