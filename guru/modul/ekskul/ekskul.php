@@ -10,19 +10,17 @@ while ($row = $query->fetch_assoc()) {
 	$idp=$row['peserta_didik_id'];
 	$sql1 = "SELECT * FROM data_ekskul WHERE peserta_didik_id='$idp' and smt='$smt' and tapel='$tapel' order by id_ekskul asc";
 	$query1 = $connect->query($sql1);
-	$namapeta='<div class="table-responsive mailbox-messages">
-                <table class="table">';
+	$namapeta='<div class="card-list">';
 	while($pn = $query1->fetch_assoc()){
 		$nm=$pn['id_ekskul'];
 		$nme = $connect->query("SELECT * FROM ekskul WHERE id_ekskul='$nm'")->fetch_assoc();
 		$halo=$nme['nama_ekskul'];
 		$actionButton = '
-		<button class="btn btn-icon btn-link btn-xs" type="button" data-toggle="modal" data-target="#removeEkskulModal" onclick="removeEkskul(\''.$pn['id'].'\')"><i class="fa fa-trash"></i></button>
-		';
+		<button class="btn btn-icon btn-primary btn-round btn-xs" data-toggle="modal" data-target="#removeEkskulModal" onclick="removeEkskul(\''.$pn['id'].'\')"><i class="fa fa-trash"></i></button>';
 		
-		$namapeta.='<tr><td class="mailbox-name">'.$halo.'</td><td class="mailbox-subject">'.$pn['keterangan'].'</td><td class="mailbox-attachment">'.$actionButton.'</td></tr>';
+		$namapeta.='<div class="item-list"><div class="info-user ml-3"><div class="username">'.$halo.'</div><div class="status">'.$pn['keterangan'].'</div></div>'.$actionButton.'</div>';
 	};
-	$namapeta.='</tbody></table></div>';
+	$namapeta.='</div>';
 	$tombol = '
 		<div class="btn-group">
 		<a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#mod-ekskul" data-kelas="'.$kelas.'" data-tapel="'.$tapel.'" data-smt="'.$smt.'" data-pdid="'.$idp.'" id="getEkskul"><i class="fa fa-plus-circle"></i></a>

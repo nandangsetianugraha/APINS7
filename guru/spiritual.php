@@ -73,12 +73,7 @@ $nama_asp=mysqli_fetch_array($sql_asp);
 									<div class="card-head-row">
 										<div class="card-title">Sikap Spiritual</div>
 										<div class="card-tools">
-											<a href="#" data-toggle="modal" data-target="#tambahNilai" id="1" title="Contacts" class="btn btn-info btn-border btn-round btn-sm">
-											<span class="btn-label">
-												<i class="fa fa-plus"></i>
-											</span>
-											Spiritual
-											</a>											
+																						
 										</div>
 									</div>
 								</div>
@@ -87,10 +82,8 @@ $nama_asp=mysqli_fetch_array($sql_asp);
 										<table id="sosTable" class="display table">
 											<thead>
 															<tr>
-																<th class="text-center">Nama Siswa</th>
+																<th class="text-center" width="45%">Nama Siswa</th>
 																<th class="text-center">Catatan Perilaku</th>
-																<th class="text-center">Butir Sikap</th>
-																<th class="text-center">&nbsp;</th>
 															</tr>
 														</thead>
 											<tbody>	
@@ -250,13 +243,15 @@ $nama_asp=mysqli_fetch_array($sql_asp);
 			
 		});
 		$('#tambahNilai').on('show.bs.modal', function (e) {
-            var rowid = $(e.relatedTarget).data('id');
-			var kelas=$('#kelas').val();
+            var rowid = $(e.relatedTarget).data('pdid');
+			var rowsmt = $(e.relatedTarget).data('smt');
+			var rowtapel = $(e.relatedTarget).data('tapel');
+			var rowkelas = $(e.relatedTarget).data('kelas');
             //menggunakan fungsi ajax untuk pengambilan data
             $.ajax({
                 type : 'get',
                 url : 'modul/administrasi/modal_psi.php',
-                data :  'peta=1&kelas='+kelas+"&smt=<?=$smt;?>&tapel=<?=$tapel;?>",
+                data :  'peta=1&kelas='+rowkelas+'&smt='+rowsmt+'&tapel='+rowtapel+'&idpd='+rowid,
 				beforeSend: function()
 						{	
 							$(".fetched-data").html('<i class="fa fa-spinner fa-pulse fa-fw"></i> Loading ...');

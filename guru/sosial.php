@@ -47,18 +47,13 @@ $nama_asp=mysqli_fetch_array($sql_asp);
 						</div>
 					</div> <!--Akhir Row-->
 					<div class="row">
-						<div class="col-md-7">
+						<div class="col-md-8">
 							<div class="card">
 								<div class="card-header">
 									<div class="card-head-row">
 										<div class="card-title">Sikap Sosial</div>
 										<div class="card-tools">
-											<a href="#" data-toggle="modal" data-target="#tambahNilai" id="2" title="Contacts" class="btn btn-info btn-border btn-round btn-sm">
-											<span class="btn-label">
-												<i class="fa fa-plus"></i>
-											</span>
-											Sosial
-											</a>											
+																					
 										</div>
 									</div>
 								</div>
@@ -67,10 +62,8 @@ $nama_asp=mysqli_fetch_array($sql_asp);
 										<table id="sosTable" class="display table">
 											<thead>
 															<tr>
-																<th class="text-center">Nama Siswa</th>
+																<th class="text-center" width="45%">Nama Siswa</th>
 																<th class="text-center">Catatan Perilaku</th>
-																<th class="text-center">Butir Sikap</th>
-																<th class="text-center">&nbsp;</th>
 															</tr>
 														</thead>
 											<tbody>	
@@ -81,7 +74,7 @@ $nama_asp=mysqli_fetch_array($sql_asp);
 								</div>
 							</div>
 						</div>
-						<div class="col-md-5">
+						<div class="col-md-4">
 							<div class="card">
 								<div class="card-header">
 									<div class="card-head-row">
@@ -307,13 +300,15 @@ $nama_asp=mysqli_fetch_array($sql_asp);
 				"order": []
 			} );
 		$('#tambahNilai').on('show.bs.modal', function (e) {
-            var rowid = $(e.relatedTarget).data('id');
-			var kelas=$('#kelas').val();
+            var rowid = $(e.relatedTarget).data('pdid');
+			var rowsmt = $(e.relatedTarget).data('smt');
+			var rowtapel = $(e.relatedTarget).data('tapel');
+			var rowkelas = $(e.relatedTarget).data('kelas');
             //menggunakan fungsi ajax untuk pengambilan data
             $.ajax({
                 type : 'get',
                 url : 'modul/administrasi/modal_sos.php',
-                data :  'peta=2&kelas='+kelas+"&smt=<?=$smt;?>&tapel=<?=$tapel;?>",
+                data :  'peta=2&kelas='+rowkelas+'&smt='+rowsmt+'&tapel='+rowtapel+'&idpd='+rowid,
 				beforeSend: function()
 						{	
 							$(".fetched-data").html('<i class="fa fa-spinner fa-pulse fa-fw"></i> Loading ...');

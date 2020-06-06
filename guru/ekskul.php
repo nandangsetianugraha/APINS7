@@ -26,7 +26,7 @@ $smt=isset($_GET['smt']) ? $_GET['smt'] : $smt_aktif;
 										<table id="manageMemberTable" class="display table">
 											<thead>
                                             <tr>
-												<th class="text-center" width="30%">Nama Siswa</th>
+												<th class="text-center" width="45%">Nama Siswa</th>
 												<th class="text-center">Data Ekstrakurikuler</th>
 											</tr>
                                         </thead>
