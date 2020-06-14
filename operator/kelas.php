@@ -27,10 +27,10 @@ $ab=substr($romb, 0, 1);
 										<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Aktif</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link" href="lulus.php" role="tab" aria-controls="pills-profile" aria-selected="false">Lulus</a>
+										<a class="nav-link" href="lulus" role="tab" aria-controls="pills-profile" aria-selected="false">Lulus</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link" href="mutasi.php" role="tab" aria-controls="pills-contact" aria-selected="false">Mutasi</a>
+										<a class="nav-link" href="mutasi" role="tab" aria-controls="pills-contact" aria-selected="false">Mutasi</a>
 									</li>
 								</ul>
 							</div>

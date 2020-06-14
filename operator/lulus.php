@@ -24,13 +24,13 @@ $ab=substr($romb, 0, 1);
 							<div class="row row-nav-line">
 								<ul class="nav nav-pills nav-line nav-color-secondary w-100 pl-3" id="pills-tab" role="tablist">
 									<li class="nav-item">
-										<a class="nav-link" href="kelas.php" role="tab" aria-controls="pills-home" aria-selected="true">Aktif</a>
+										<a class="nav-link" href="kelas" role="tab" aria-controls="pills-home" aria-selected="true">Aktif</a>
 									</li>
 									<li class="nav-item">
 										<a class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Lulus</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link" href="mutasi.php" role="tab" aria-controls="pills-contact" aria-selected="false">Mutasi</a>
+										<a class="nav-link" href="mutasi" role="tab" aria-controls="pills-contact" aria-selected="false">Mutasi</a>
 									</li>
 								</ul>
 							</div>

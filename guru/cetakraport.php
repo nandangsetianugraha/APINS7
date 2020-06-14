@@ -41,8 +41,12 @@ if($level==96){ //guru pai
 							<div id="diagram" class="table-responsive">
 							<table id="Raportku" class="table table-bordered">
 								<thead>
-								   <tr>
-										<th>Nama</th>
+								    <tr>
+										<th width="45%">Nama</th>
+										<th>KI-1</th>
+										<th>KI-2</th>
+										<th>KI-3</th>
+										<th>KI-4</th>
 										<th></th>
 									</tr>
 								</thead>

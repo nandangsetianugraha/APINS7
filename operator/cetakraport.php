@@ -42,11 +42,39 @@ $mpid = isset($_GET['mp']) ? $_GET['mp'] : 1;
 					
 					<div class="card">
 						<div class="card-body">
+							<div class="btn-group">
+								<a href="#" id="cetakT" title="Cetak Penyerahan Raport" class="btn btn-info btn-border btn-round btn-sm">
+									<span class="btn-label">
+										<i class="fas fa-print"></i>
+									</span>
+									Cetak Penyerahan Raport
+								</a>
+							</div>
+							<div class="btn-group">
+								<a href="#" id="cetakKI3" title="Cetak KI3" class="btn btn-info btn-border btn-round btn-sm">
+									<span class="btn-label">
+										<i class="fas fa-print"></i>
+									</span>
+									Cetak Rekap KI3
+								</a>
+							</div>
+							<div class="btn-group">
+								<a href="#" id="cetakKI4" title="Cetak KI4" class="btn btn-info btn-border btn-round btn-sm">
+									<span class="btn-label">
+										<i class="fas fa-print"></i>
+									</span>
+									Cetak Rekap KI4
+								</a>
+							</div>
 							<div id="diagram" class="table-responsive">
 							<table id="Raportku" class="table table-bordered">
 								<thead>
 								   <tr>
-										<th>Nama</th>
+										<th width="45%">Nama</th>
+										<th>KI-1</th>
+										<th>KI-2</th>
+										<th>KI-3</th>
+										<th>KI-4</th>
 										<th></th>
 									</tr>
 								</thead>
@@ -88,7 +116,70 @@ $mpid = isset($_GET['mp']) ? $_GET['mp'] : 1;
 				"paging":false,
 			"ajax": "modul/rekap/Scetak.php?kelas="+kelas+"&tapel="+tapel+"&smt="+smt,
 			"order": []
+			});
 		});
+		$( "#cetakT" ).click(function() {
+			var kelas=$('#kelas').val();
+			var tapel=$('#tapel').val();
+			var smt=$('#smt').val();
+			if(kelas == 0){
+				$.notify({
+					icon: 'flaticon-alarm-1',
+					title: 'Error',
+					message: 'Pilih Kelas Dulu',
+					},{
+					type: 'info',
+					placement: {
+						from: "bottom",
+						align: "right"
+					},
+					time: 10,
+				});
+			}else{
+				window.open('../cetak/penyerahanraport.php?kelas='+kelas+'&tapel='+tapel+'&smt='+smt,' _blank');
+			}
+		});
+		$( "#cetakKI3" ).click(function() {
+			var kelas=$('#kelas').val();
+			var tapel=$('#tapel').val();
+			var smt=$('#smt').val();
+			if(kelas == 0){
+				$.notify({
+					icon: 'flaticon-alarm-1',
+					title: 'Error',
+					message: 'Pilih Kelas Dulu',
+					},{
+					type: 'info',
+					placement: {
+						from: "bottom",
+						align: "right"
+					},
+					time: 10,
+				});
+			}else{
+				window.open('../cetak/rekapnilai.php?kelas='+kelas+'&tapel='+tapel+'&smt='+smt+'&jns=k3',' _blank');
+			}
+		});
+		$( "#cetakKI4" ).click(function() {
+			var kelas=$('#kelas').val();
+			var tapel=$('#tapel').val();
+			var smt=$('#smt').val();
+			if(kelas == 0){
+				$.notify({
+					icon: 'flaticon-alarm-1',
+					title: 'Error',
+					message: 'Pilih Kelas Dulu',
+					},{
+					type: 'info',
+					placement: {
+						from: "bottom",
+						align: "right"
+					},
+					time: 10,
+				});
+			}else{
+				window.open('../cetak/rekapnilaik.php?kelas='+kelas+'&tapel='+tapel+'&smt='+smt+'&jns=k4',' _blank');
+			}
 		});
 	});
 </script>

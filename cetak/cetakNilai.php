@@ -99,9 +99,21 @@ $id_kab=$siswa['kabupaten'];
 $id_kec=$siswa['kecamatan'];
 $id_des=$siswa['kelurahan'];
 $prov=$connect->query("select * from provinsi where id_prov='$id_prov'")->fetch_assoc();
-$kab=$connect->query("select * from provinsi where id='$id_kab'")->fetch_assoc();
-$kec=$connect->query("select * from provinsi where id='$id_kec'")->fetch_assoc();
-$des=$connect->query("select * from provinsi where id='$id_des'")->fetch_assoc();
+$kab=$connect->query("select * from kabupaten where id='$id_kab'")->fetch_assoc();
+$ckec=$connect->query("select * from kecamatan where id='$id_kec'")->num_rows;
+$cdes=$connect->query("select * from kelurahan where id_kel='$id_des'")->num_rows;
+if($ckec>0){
+	$kec=$connect->query("select * from kecamatan where id='$id_kec'")->fetch_assoc();
+	$nkec=$kec['nama'];
+}else{
+	$nkec="";
+}
+if($cdes>0){
+	$des=$connect->query("select * from kelurahan where id_kel='$id_des'")->fetch_assoc();
+	$ndes=$des['nama'];
+}else{
+	$ndes="";
+};
  $pdf->AddPage(); 
  $pdf->SetFont('helvetica','',12);
 
@@ -246,14 +258,14 @@ $des=$connect->query("select * from provinsi where id='$id_des'")->fetch_assoc()
  $table3->easyCell('Kelurahan/Desa');
  $table3->easyCell(':');
  $table3->easyCell('');
- $table3->easyCell($des['nama'],'border:B;font-style:B');
+ $table3->easyCell($ndes,'border:B;font-style:B');
  $table3->printRow();
  
  $table3->rowStyle('font-size:12');
  $table3->easyCell('Kecamatan');
  $table3->easyCell(':');
  $table3->easyCell('');
- $table3->easyCell($kec['nama'],'border:B;font-style:B');
+ $table3->easyCell($nkec,'border:B;font-style:B');
  $table3->printRow();
  
  $table3->rowStyle('font-size:12');
@@ -818,37 +830,79 @@ $eks->easyCell('No.','align:C; valign:M');
 $eks->easyCell('Kegiatan Ekstrakurikuler','align:C; valign:M');
 $eks->easyCell('Keterangan','align:C; valign:M');
 $eks->printRow();
-$adakah=$connect->query("select * from data_ekskul where peserta_didik_id='$idp' and smt='$smt' and tapel='$tapel' order by id_ekskul asc")->num_rows;
-$ekstra = "select * from data_ekskul where peserta_didik_id='$idp' and smt='$smt' and tapel='$tapel' order by id_ekskul asc";
+$eks->rowStyle('font-size:12; min-height:15');
+$rowed = $connect->query("select * from data_ekskul where peserta_didik_id='$idp' and smt='$smt' and tapel='$tapel' and id_ekskul=1")->fetch_assoc();
+$eks->easyCell('1.');
+$eks->easyCell('Praja Muda Karana (Pramuka)');
+$eks->easyCell($rowed['keterangan']);
+$eks->printRow();
+$ekstra = "select * from data_ekskul where peserta_didik_id='$idp' and smt='$smt' and tapel='$tapel' and id_ekskul<>1 order by id_ekskul asc";
 $queryed = $connect->query($ekstra);
-if($adakah>0){
-	$nomor=0;
-while ($rowed = $queryed->fetch_assoc()) {
-	$nomor=$nomor+1;
-	$idekskul=$rowed['id_ekskul'];
-	$neks=$connect->query("select * from ekskul where id_ekskul='$idekskul'")->fetch_assoc();
-	$eks->rowStyle('font-size:12; min-height:15');
-	$eks->easyCell($nomor);
-	$eks->easyCell($neks['nama_ekskul']);
-	$eks->easyCell($rowed['keterangan']);
-	$eks->printRow();
+$oke = $queryed->num_rows;
+if($oke>0){
+	$nomor=2;
+	while ($rowed = $queryed->fetch_assoc()) {
+		$idekskul=$rowed['id_ekskul'];
+		$neks=$connect->query("select * from ekskul where id_ekskul='$idekskul'")->fetch_assoc();
+		$eks->rowStyle('font-size:12; min-height:15');
+		$eks->easyCell($nomor.'.');
+		$eks->easyCell($neks['nama_ekskul']);
+		$eks->easyCell($rowed['keterangan']);
+		$eks->printRow();
+		$nomor=$nomor+1;
+	};
 };
+$beks = $connect->query("select * from data_ekskul where peserta_didik_id='$idp' and smt='$smt' and tapel='$tapel'")->num_rows;
+if($beks==0){
+$eks->rowStyle('font-size:12; min-height:15');
+$eks->easyCell('2.');
+$eks->easyCell('');
+$eks->easyCell('');
+$eks->printRow();
+$eks->rowStyle('font-size:12; min-height:15');
+$eks->easyCell('3.');
+$eks->easyCell('');
+$eks->easyCell('');
+$eks->printRow();
+$eks->rowStyle('font-size:12; min-height:15');
+$eks->easyCell('4.');
+$eks->easyCell('');
+$eks->easyCell('');
+$eks->printRow();
+}elseif($beks==1){
+$eks->rowStyle('font-size:12; min-height:15');
+$eks->easyCell('2.');
+$eks->easyCell('');
+$eks->easyCell('');
+$eks->printRow();
+$eks->rowStyle('font-size:12; min-height:15');
+$eks->easyCell('3.');
+$eks->easyCell('');
+$eks->easyCell('');
+$eks->printRow();
+$eks->rowStyle('font-size:12; min-height:15');
+$eks->easyCell('4.');
+$eks->easyCell('');
+$eks->easyCell('');
+$eks->printRow();
+}elseif($beks==2){
+$eks->rowStyle('font-size:12; min-height:15');
+$eks->easyCell('3.');
+$eks->easyCell('');
+$eks->easyCell('');
+$eks->printRow();
+$eks->rowStyle('font-size:12; min-height:15');
+$eks->easyCell('4.');
+$eks->easyCell('');
+$eks->easyCell('');
+$eks->printRow();
+}elseif($beks==3){
+$eks->rowStyle('font-size:12; min-height:15');
+$eks->easyCell('4.');
+$eks->easyCell('');
+$eks->easyCell('');
+$eks->printRow();
 }else{
-	$eks->rowStyle('font-size:12; min-height:15');
-	$eks->easyCell('1.');
-	$eks->easyCell('Praja Muda Karana (Pramuka)');
-	$eks->easyCell('');
-	$eks->printRow();
-	$eks->rowStyle('font-size:12; min-height:15');
-	$eks->easyCell('2.');
-	$eks->easyCell('');
-	$eks->easyCell('');
-	$eks->printRow();
-	$eks->rowStyle('font-size:12; min-height:15');
-	$eks->easyCell('3.');
-	$eks->easyCell('');
-	$eks->easyCell('');
-	$eks->printRow();
 };
 $eks->endTable();
 

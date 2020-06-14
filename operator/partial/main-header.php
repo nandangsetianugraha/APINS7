@@ -58,7 +58,7 @@
 								<li>
 									<div class="notif-scroll scrollbar-outer">
 										<div class="notif-center">
-											<a href="IDPegawai.php">
+											<a href="IDPegawai">
 												<div class="notif-icon notif-primary"> <i class="fa fa-user-plus"></i> </div>
 												<div class="notif-content">
 													<span class="block">
@@ -116,37 +116,37 @@
 								<div class="quick-actions-scroll scrollbar-outer">
 									<div class="quick-actions-items">
 										<div class="row m-0">
-											<a class="col-6 col-md-4 p-0" href="raportsosial.php">
+											<a class="col-6 col-md-4 p-0" href="raportsosial">
 												<div class="quick-actions-item">
 													<i class="flaticon-file-1"></i>
 													<span class="text">Generated Sikap Sosial</span>
 												</div>
 											</a>
-											<a class="col-6 col-md-4 p-0" href="raportspiritual.php">
+											<a class="col-6 col-md-4 p-0" href="raportspiritual">
 												<div class="quick-actions-item">
 													<i class="flaticon-file-1"></i>
 													<span class="text">Generated Spiritual</span>
 												</div>
 											</a>
-											<a class="col-6 col-md-4 p-0" href="raportpengetahuan.php">
+											<a class="col-6 col-md-4 p-0" href="raportpengetahuan">
 												<div class="quick-actions-item">
 													<i class="flaticon-file-1"></i>
 													<span class="text">Generated Pengetahuan</span>
 												</div>
 											</a>
-											<a class="col-6 col-md-4 p-0" href="raportketrampilan.php">
+											<a class="col-6 col-md-4 p-0" href="raportketrampilan">
 												<div class="quick-actions-item">
 													<i class="flaticon-file-1"></i>
 													<span class="text">Generated Ketrampilan</span>
 												</div>
 											</a>
-											<a class="col-6 col-md-4 p-0" href="cetakraport.php">
+											<a class="col-6 col-md-4 p-0" href="cetakraport">
 												<div class="quick-actions-item">
 													<i class="flaticon-pen"></i>
 													<span class="text">Cetak Raport</span>
 												</div>
 											</a>
-											<a class="col-6 col-md-4 p-0" href="rekapraport.php">
+											<a class="col-6 col-md-4 p-0" href="rekapraport">
 												<div class="quick-actions-item">
 													<i class="flaticon-interface-1"></i>
 													<span class="text">Rekapitulasi Raport</span>
@@ -170,7 +170,7 @@
 											<div class="avatar-lg"><img src="<?=$avatar;?>" alt="image profile" class="avatar-img rounded"></div>
 											<div class="u-text">
 												<h4><?=$bioku['nama'];?></h4>
-												<p class="text-muted"><?=$bioku['email'];?></p><a href="profil.php" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+												<p class="text-muted"><?=$bioku['email'];?></p><a href="profil" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
 											</div>
 										</div>
 									</li>
@@ -184,7 +184,7 @@
 										<a class="dropdown-item" href="#">Account Setting</a>
 										<div class="dropdown-divider"></div>
 										-->
-										<a class="dropdown-item" href="logout.php">Logout</a>
+										<a class="dropdown-item" href="logout">Logout</a>
 									</li>
 								</div>
 							</ul>

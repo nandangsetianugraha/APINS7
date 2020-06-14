@@ -18,22 +18,22 @@
 							<div class="collapse in" id="collapseExample">
 								<ul class="nav">
 									<li>
-										<a href="profil.php">
+										<a href="profil">
 											<span class="link-collapse">My Profile</span>
 										</a>
 									</li>
 									<li>
-										<a href="pengguna.php">
+										<a href="pengguna">
 											<span class="link-collapse">Pengguna</span>
 										</a>
 									</li>
 									<li>
-										<a href="blog.php">
+										<a href="blog">
 											<span class="link-collapse">Blog Post</span>
 										</a>
 									</li>
 									<li>
-										<a href="konfig.php">
+										<a href="konfig">
 											<span class="link-collapse">Settings</span>
 										</a>
 									</li>
@@ -63,12 +63,12 @@
 							<div class="collapse" id="pd">
 								<ul class="nav nav-collapse">
 									<li>
-										<a href="kelas.php">
+										<a href="kelas">
 											<span class="sub-item">Daftar Siswa</span>
 										</a>
 									</li>
 									<li>
-										<a href="guru.php">
+										<a href="guru">
 											<span class="sub-item">Daftar PTK</span>
 										</a>
 									</li>
@@ -84,22 +84,22 @@
 							<div class="collapse" id="base">
 								<ul class="nav nav-collapse">
 									<li>
-										<a href="tema.php">
+										<a href="tema">
 											<span class="sub-item">Tema</span>
 										</a>
 									</li>
 									<li>
-										<a href="kompetensi.php">
+										<a href="kompetensi">
 											<span class="sub-item">Kompetensi Dasar</span>
 										</a>
 									</li>
 									<li>
-										<a href="pemetaan.php">
+										<a href="pemetaan">
 											<span class="sub-item">Pemetaan KD</span>
 										</a>
 									</li>
 									<li>
-										<a href="kkm.php">
+										<a href="kkm">
 											<span class="sub-item">KKM</span>
 										</a>
 									</li>
@@ -115,12 +115,12 @@
 							<div class="collapse" id="sidebarLayouts">
 								<ul class="nav nav-collapse">
 									<li>
-										<a href="spiritual.php">
+										<a href="spiritual">
 											<span class="sub-item">Spiritual</span>
 										</a>
 									</li>
 									<li>
-										<a href="sosial.php">
+										<a href="sosial">
 											<span class="sub-item">Sosial</span>
 										</a>
 									</li>
@@ -136,22 +136,22 @@
 							<div class="collapse" id="forms">
 								<ul class="nav nav-collapse">
 									<li>
-										<a href="pengetahuan.php">
+										<a href="pengetahuan">
 											<span class="sub-item">Pengetahuan</span>
 										</a>
 									</li>
 									<li>
-										<a href="ketrampilan.php">
+										<a href="ketrampilan">
 											<span class="sub-item">Ketrampilan</span>
 										</a>
 									</li>
 									<li>
-										<a href="pts.php">
+										<a href="pts">
 											<span class="sub-item">Tengah Semester</span>
 										</a>
 									</li>
 									<li>
-										<a href="pas.php">
+										<a href="pas">
 											<span class="sub-item">Akhir Semester</span>
 										</a>
 									</li>
@@ -167,22 +167,22 @@
 							<div class="collapse" id="tables">
 								<ul class="nav nav-collapse">
 									<li>
-										<a href="kesehatan.php">
+										<a href="kesehatan">
 											<span class="sub-item">Kesehatan</span>
 										</a>
 									</li>
 									<li>
-										<a href="prestasi.php">
+										<a href="prestasi">
 											<span class="sub-item">Prestasi</span>
 										</a>
 									</li>
 									<li>
-										<a href="ekskul.php">
+										<a href="ekskul">
 											<span class="sub-item">Ekstrakurikuler</span>
 										</a>
 									</li>
 									<li>
-										<a href="saran.php">
+										<a href="saran">
 											<span class="sub-item">Saran</span>
 										</a>
 									</li>
@@ -198,12 +198,12 @@
 							<div class="collapse" id="maps">
 								<ul class="nav nav-collapse">
 									<li>
-										<a href="juzamma.php">
+										<a href="juzamma">
 											<span class="sub-item">Penilaian Tahfidz</span>
 										</a>
 									</li>
 									<li>
-										<a href="cetaktahfidz.php">
+										<a href="cetaktahfidz">
 											<span class="sub-item">Cetak Raport Tahfidz</span>
 										</a>
 									</li>
@@ -219,7 +219,7 @@
 							<div class="collapse" id="charts">
 								<ul class="nav nav-collapse">
 									<li>
-										<a href="formatf1.php">
+										<a href="formatf1">
 											<span class="sub-item">Format F1</span>
 										</a>
 									</li>
@@ -227,7 +227,7 @@
 							</div>
 						</li>
 						<li class="nav-item">
-							<a href="cekraport.php">
+							<a href="cekraport">
 								<i class="fas fa-book-reader"></i>
 								<p>Cek Raport Kelas 6</p>
 							</a>
