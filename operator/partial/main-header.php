@@ -152,6 +152,12 @@
 													<span class="text">Rekapitulasi Raport</span>
 												</div>
 											</a>
+											<a class="col-6 col-md-4 p-0" href="cetakrekap">
+												<div class="quick-actions-item">
+													<i class="flaticon-interface-1"></i>
+													<span class="text">Rekapitulasi Nilai</span>
+												</div>
+											</a>
 										</div>
 									</div>
 								</div>

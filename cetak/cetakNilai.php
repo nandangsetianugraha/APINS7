@@ -831,12 +831,18 @@ $eks->easyCell('Kegiatan Ekstrakurikuler','align:C; valign:M');
 $eks->easyCell('Keterangan','align:C; valign:M');
 $eks->printRow();
 $eks->rowStyle('font-size:12; min-height:15');
-$rowed = $connect->query("select * from data_ekskul where peserta_didik_id='$idp' and smt='$smt' and tapel='$tapel' and id_ekskul=1")->fetch_assoc();
+$cekrow = $connect->query("select * from data_ekskul where peserta_didik_id='$idp' and smt='$smt' and tapel='$tapel' and id_ekskul=1")->num_rows;
+if($cekrow>0){
+	$rowed = $connect->query("select * from data_ekskul where peserta_didik_id='$idp' and smt='$smt' and tapel='$tapel' and id_ekskul=1")->fetch_assoc();
+	$pramu=$rowed['keterangan'];
+}else{
+	$pramu="";
+};
 $eks->easyCell('1.');
 $eks->easyCell('Praja Muda Karana (Pramuka)');
-$eks->easyCell($rowed['keterangan']);
+$eks->easyCell($pramu);
 $eks->printRow();
-$ekstra = "select * from data_ekskul where peserta_didik_id='$idp' and smt='$smt' and tapel='$tapel' and id_ekskul<>1 order by id_ekskul asc";
+$ekstra = "select * from data_ekskul where peserta_didik_id='$idp' and smt='$smt' and tapel='$tapel' and id_ekskul!=1 order by id_ekskul asc";
 $queryed = $connect->query($ekstra);
 $oke = $queryed->num_rows;
 if($oke>0){
@@ -852,8 +858,7 @@ if($oke>0){
 		$nomor=$nomor+1;
 	};
 };
-$beks = $connect->query("select * from data_ekskul where peserta_didik_id='$idp' and smt='$smt' and tapel='$tapel'")->num_rows;
-if($beks==0){
+if($oke==0){
 $eks->rowStyle('font-size:12; min-height:15');
 $eks->easyCell('2.');
 $eks->easyCell('');
@@ -869,12 +874,7 @@ $eks->easyCell('4.');
 $eks->easyCell('');
 $eks->easyCell('');
 $eks->printRow();
-}elseif($beks==1){
-$eks->rowStyle('font-size:12; min-height:15');
-$eks->easyCell('2.');
-$eks->easyCell('');
-$eks->easyCell('');
-$eks->printRow();
+}elseif($oke==1){
 $eks->rowStyle('font-size:12; min-height:15');
 $eks->easyCell('3.');
 $eks->easyCell('');
@@ -885,18 +885,7 @@ $eks->easyCell('4.');
 $eks->easyCell('');
 $eks->easyCell('');
 $eks->printRow();
-}elseif($beks==2){
-$eks->rowStyle('font-size:12; min-height:15');
-$eks->easyCell('3.');
-$eks->easyCell('');
-$eks->easyCell('');
-$eks->printRow();
-$eks->rowStyle('font-size:12; min-height:15');
-$eks->easyCell('4.');
-$eks->easyCell('');
-$eks->easyCell('');
-$eks->printRow();
-}elseif($beks==3){
+}elseif($oke==2){
 $eks->rowStyle('font-size:12; min-height:15');
 $eks->easyCell('4.');
 $eks->easyCell('');
@@ -927,22 +916,55 @@ $srn->printRow();
 $srn->endTable(5);
 
 //Tinggi Berat Badan
-$adatb=$connect->query("select * from data_kesehatan where peserta_didik_id='$idp' and smt='$smt' and tapel='$tapel'")->num_rows;
-if($adatb>0){
-$tbb1=$connect->query("select * from data_kesehatan where peserta_didik_id='$idp' and smt='$smt' and tapel='$tapel'")->fetch_assoc();
-$tinggi=$tbb1['tinggi'];
-$berat=$tbb1['berat'];
-$pendengaran=$tbb1['pendengaran'];
-$penglihatan=$tbb1['penglihatan'];
-$gigi=$tbb1['gigi'];
-$lainnya=$tbb1['lainnya'];
+$adatb1=$connect->query("select * from data_kesehatan where peserta_didik_id='$idp' and smt='1' and tapel='$tapel'")->num_rows;
+$adatb2=$connect->query("select * from data_kesehatan where peserta_didik_id='$idp' and smt='2' and tapel='$tapel'")->num_rows;
+if($adatb1>0){
+$tbb1=$connect->query("select * from data_kesehatan where peserta_didik_id='$idp' and smt='1' and tapel='$tapel'")->fetch_assoc();
+if($tbb1['tinggi']=='0'){
+	$tinggi1="";
 }else{
-	$tinggi="";
-	$berat="";
-	$pendengaran="";
-	$penglihatan="";
-	$gigi="";
-	$lainnya="";
+	$tinggi1=$tbb1['tinggi'];
+};
+if($tbb1['berat']=='0'){
+	$berat1="";
+}else{
+	$berat1=$tbb1['berat'];
+};
+$pendengaran1=$tbb1['pendengaran'];
+$penglihatan1=$tbb1['penglihatan'];
+$gigi1=$tbb1['gigi'];
+$lainnya1=$tbb1['lainnya'];
+}else{
+	$tinggi1="";
+	$berat1="";
+	$pendengaran1="";
+	$penglihatan1="";
+	$gigi1="";
+	$lainnya1="";
+};
+if($adatb2>0){
+$tbb2=$connect->query("select * from data_kesehatan where peserta_didik_id='$idp' and smt='2' and tapel='$tapel'")->fetch_assoc();
+if($tbb2['tinggi']=='0'){
+	$tinggi2="";
+}else{
+	$tinggi2=$tbb2['tinggi'];
+};
+if($tbb2['berat']=='0'){
+	$berat2="";
+}else{
+	$berat2=$tbb2['berat'];
+};
+$pendengaran2=$tbb2['pendengaran'];
+$penglihatan2=$tbb2['penglihatan'];
+$gigi2=$tbb2['gigi'];
+$lainnya2=$tbb2['lainnya'];
+}else{
+	$tinggi2="";
+	$berat2="";
+	$pendengaran2="";
+	$penglihatan2="";
+	$gigi2="";
+	$lainnya2="";
 };
 //$tbb2=$connect->query("select * from data_kesehatan where peserta_didik_id='$idp' and smt='2' and tapel='$tapel'")->fetch_assoc();
 $table8=new easyTable($pdf, '{8,100}', 'align:L');
@@ -957,31 +979,24 @@ $tbn->easyCell('No.','rowspan:2;align:C; valign:M');
 $tbn->easyCell('Aspek yang Dinilai','rowspan:2;align:C; valign:M');
 $tbn->easyCell('Semester','colspan:2; align:C; valign:M');
 $tbn->printRow();
+
 $tbn->rowStyle('font-size:12; font-style:B; bgcolor:#BEBEBE; min-height:7');
 $tbn->easyCell('1','align:C; valign:M');
 $tbn->easyCell('2','align:C; valign:M');
 $tbn->printRow();
+
 $tbn->rowStyle('font-size:12; min-height:10');
 $tbn->easyCell('1.','align:L; valign:T');
 $tbn->easyCell('Tinggi Badan','align:L; valign:T');
-if($smt==1){
-    $tbn->easyCell($tinggi,'align:C; valign:M');
-    $tbn->easyCell('','align:C; valign:M');
-}else{
-    $tbn->easyCell('','align:C; valign:M');
-    $tbn->easyCell($tinggi,'align:C; valign:M');
-};
+$tbn->easyCell($tinggi1,'align:C; valign:M');
+$tbn->easyCell($tinggi2,'align:C; valign:M');
 $tbn->printRow();
+
 $tbn->rowStyle('font-size:12; min-height:10');
 $tbn->easyCell('2.','align:L; valign:T');
 $tbn->easyCell('Berat Badan','align:L; valign:T');
-if($smt==1){
-    $tbn->easyCell($berat,'align:C; valign:M');
-    $tbn->easyCell('','align:C; valign:M');
-}else{
-    $tbn->easyCell('','align:C; valign:M');
-    $tbn->easyCell($berat,'align:C; valign:M');
-};
+$tbn->easyCell($berat1,'align:C; valign:M');
+$tbn->easyCell($berat2,'align:C; valign:M');
 $tbn->printRow();
 $tbn->endTable(5);
 //Kesehatan
@@ -1001,25 +1016,34 @@ $kes->printRow();
 $kes->rowStyle('font-size:12; min-height:15');
 $kes->easyCell('1.','align:L; valign:T');
 $kes->easyCell('Pendengaran','align:L; valign:T');
-    $kes->easyCell($pendengaran,'align:C; valign:M');
-$kes->printRow();
+if($smt===1){
+    $kes->easyCell($pendengaran1,'align:C; valign:M');
+}else{
+    $kes->easyCell($pendengaran2,'align:C; valign:M');
+};$kes->printRow();
 $kes->rowStyle('font-size:12; min-height:15');
 $kes->easyCell('2.','align:L; valign:T');
 $kes->easyCell('Penglihatan','align:L; valign:T');
-    $kes->easyCell($penglihatan,'align:C; valign:M');
-$kes->printRow();
+if($smt===1){
+    $kes->easyCell($penglihatan1,'align:C; valign:M');
+}else{
+    $kes->easyCell($penglihatan2,'align:C; valign:M');
+};$kes->printRow();
 $kes->rowStyle('font-size:12; min-height:15');
 $kes->easyCell('3.','align:L; valign:T');
 $kes->easyCell('Gigi','align:L; valign:T');
-    $kes->easyCell($gigi,'align:C; valign:M');
-$kes->printRow();
+if($smt===1){
+    $kes->easyCell($gigi1,'align:C; valign:M');
+}else{
+    $kes->easyCell($gigi2,'align:C; valign:M');
+};$kes->printRow();
 $kes->rowStyle('font-size:12; min-height:15');
 $kes->easyCell('4.','align:L; valign:T');
 $kes->easyCell("Lainnya\n\n..................................",'align:L; valign:T');
 if($smt===1){
-    $kes->easyCell($lainnya,'align:C; valign:M');
+    $kes->easyCell($lainnya1,'align:C; valign:M');
 }else{
-    $kes->easyCell($lainnya,'align:C; valign:M');
+    $kes->easyCell($lainnya2,'align:C; valign:M');
 };
 $kes->printRow();
 $kes->endTable(5);
@@ -1135,16 +1159,217 @@ $hadir->printRow();
 $hadir->endTable(10);	
 };
 //TTD
-$ttd=new easyTable($pdf, 2);
+$ttd=new easyTable($pdf, '{10,60,30,80,10}');
 $ttd->rowStyle('font-size:12');
-$ttd->easyCell("Mengetahui:\nOrang Tua/Wali,\n\n\n\n\n\n\n\n___________________________",'align:C; valign:T');
-$ttd->easyCell("Indramayu, ........................ 20.....\nGuru Kelas,\n\n\n\n\n\n\n\n___________________________\n NIP...................................",'align:C; valign:T');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('Mengetahui:','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$cektmr=$connect->query("select * from titimangsa where smt='$smt' and tapel='$tapel'")->num_rows;
+if($cektmr>0){
+	$tmr=$connect->query("select * from titimangsa where smt='$smt' and tapel='$tapel'")->fetch_assoc();
+	$ttd->easyCell('Gabuswetan, '.$tmr['tanggal'],'align:C; border:0;');
+}else{
+	$ttd->easyCell('Gabuswetan, ........................ 20.....','align:C; border:0;');
+};
+$ttd->easyCell('','align:L; border:0;');
+$ttd->printRow();
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('Orang Tua / Wali,','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('Guru Kelas,','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->printRow();
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->printRow();
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->printRow();
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->printRow();
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->printRow();
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->printRow();
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->printRow();
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->printRow();
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->printRow();
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->printRow();
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->printRow();
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->printRow();
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->printRow();
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->printRow();
+$nromb=$connect->query("select * from rombel where nama_rombel='$kelas' and tapel='$tapel'")->fetch_assoc();
+$idwks=$nromb['wali_kelas'];
+$wks=$connect->query("select * from ptk where ptk_id='$idwks'")->fetch_assoc();
+if($wks['gelar']==''){
+	$namawali=strtoupper($wks['nama']);
+}else{
+	$namawali=strtoupper($wks['nama']).', '.$wks['gelar'];
+};
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:B;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell($namawali,'align:C; border:B;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->printRow();
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('','align:C; border:0;');
+$ttd->easyCell('','align:L; border:0;');
+$ttd->easyCell('NIP.','align:L; border:0;');
+$ttd->easyCell('','align:L; border:0;');
 $ttd->printRow();
 $ttd->endTable(5);
 
-$ttd1=new easyTable($pdf, 1);
+$ttd1=new easyTable($pdf, '{50,70,50}');
 $ttd1->rowStyle('font-size:12');
-$ttd1->easyCell("Mengetahui:\nKepala Sekolah,\n\n\n\n\n\n\n\n___________________________\nNIP. ..................................",'align:C; valign:T');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('Mengetahui:','align:C; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->printRow();
+$ttd1->rowStyle('font-size:12');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('Kepala Sekolah,','align:C; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->printRow();
+$ttd1->rowStyle('font-size:12');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->printRow();
+$ttd1->rowStyle('font-size:12');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->printRow();
+$ttd1->rowStyle('font-size:12');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->printRow();
+$ttd1->rowStyle('font-size:12');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->printRow();
+$ttd1->rowStyle('font-size:12');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->printRow();
+$ttd1->rowStyle('font-size:12');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->printRow();
+$ttd1->rowStyle('font-size:12');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->printRow();
+$ttd1->rowStyle('font-size:12');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->printRow();
+$ttd1->rowStyle('font-size:12');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->printRow();
+$ttd1->rowStyle('font-size:12');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->printRow();
+$ttd1->rowStyle('font-size:12');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->printRow();
+$ttd1->rowStyle('font-size:12');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->printRow();
+$ttd1->rowStyle('font-size:12');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->printRow();
+$ks=$connect->query("select * from ptk where jenis_ptk_id='99'")->fetch_assoc();
+if($ks['gelar']==' '){
+	$namaks=strtoupper($ks['nama']);
+}else{
+	$namaks=strtoupper($ks['nama']).', '.$ks['gelar'];
+};
+$ttd1->rowStyle('font-size:12');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell($namaks,'align:C; border:B;');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->printRow();
+$ttd1->rowStyle('font-size:12');
+$ttd1->easyCell('','align:L; border:0;');
+$ttd1->easyCell('NIP. -','align:L; border:0;');
+$ttd1->easyCell('','align:L; border:0;');
 $ttd1->printRow();
 $ttd1->endTable(5);
 

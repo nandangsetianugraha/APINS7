@@ -27,6 +27,10 @@ $smt=$_GET['smt'];
 $mp=$_GET['mp'];
 $ab=substr($kelas, 0, 1);
 $tapel=$_GET['tapel'];
+$skl = "select * from penempatan where rombel='$kelas' and tapel='$tapel' order by nama asc";
+$qkl = $connect->query($skl);
+while($sis=$qkl->fetch_assoc()){
+$idp=$sis['peserta_didik_id'];
 $sqls = "select * from siswa where peserta_didik_id='$idp'";
 $querys = $connect->query($sqls);
 $siswa=$querys->fetch_assoc();
@@ -34,177 +38,171 @@ $rombs=$connect->query("select * from penempatan where peserta_didik_id='$idp' a
 $nmapel=$connect->query("select * from mapel where id_mapel='$mp'")->fetch_assoc();
 $jKD=$connect->query("select * from pemetaan where kelas='$ab' and smt='$smt' and kd_aspek='3' and mapel='$mp' group by nama_peta order by nama_peta asc")->num_rows;
 $namafilenya="Rekap Nilai ".$nmapel['nama_mapel']." Semester ".$smt.".pdf";
- $pdf=new exFPDF('L','mm',array(330,215));
+ $pdf=new exFPDF('P','mm',array(215,330));
  //halaman 1
  $pdf->AddPage(); 
- $pdf->SetFont('helvetica','',12);
+ $pdf->SetFont('helvetica','',10);
 
  $table2=new easyTable($pdf, 1);
- $table2->rowStyle('font-size:15; font-style:B;');
- $table2->easyCell('DAFTAR NILAI ASPEK PENGETAHUAN', 'align:C;');
- $table2->printRow();
- $table2->easyCell('Mata Pelajaran : '.$nmapel['nama_mapel'], 'align:C;');
- $table2->printRow();
- $table2->endTable(5);
- 
-  $table2=new easyTable($pdf, 3);
  $table2->rowStyle('font-size:12; font-style:B;');
- $table2->easyCell('Kelas : '.$kelas, 'align:L;');
- $table2->easyCell('Tahun Pelajaran : '.$tapel, 'align:C;');
- $table2->easyCell('Semester : '.$smt, 'align:R;');
+ $table2->easyCell('REKAP NILAI PENGETAHUAN', 'align:C;');
  $table2->printRow();
  $table2->endTable(5);
  
- $table3=new easyTable($pdf, '{10,30,70,10,10,10,10,10,10,10,10,10,10,10,15,10,70}','align:C;border:1');
- $table3->rowStyle('font-size:10');
- $table3->easyCell('No','align:C;rowspan:2');
- $table3->easyCell('NIS','align:C;rowspan:2');
- $table3->easyCell('Nama Peserta Didik','align:C;rowspan:2');
- $table3->easyCell('KD','align:C;rowspan:2');
- $table3->easyCell('KKM KD','align:C;rowspan:2');
- $table3->easyCell('PH TEMA','align:C;colspan:4');
- $table3->easyCell('Nilai PH','align:C;rowspan:2');
- $table3->easyCell('Nilai PTS','align:C;rowspan:2');
- $table3->easyCell('Nilai PAS','align:C;rowspan:2');
- $table3->easyCell('Nilai KD','align:C;rowspan:2');
- $table3->easyCell('Predikat','align:C;rowspan:2');
- $table3->easyCell('Nilai Rapor','align:C;rowspan:2');
- $table3->easyCell('Predikat','align:C;rowspan:2');
- $table3->easyCell('Deskripsi Raport','align:C;rowspan:2');
- $table3->printRow();
- $table3->rowStyle('font-size:10');
- $table3->easyCell('5','align:C;');
- $table3->easyCell('6','align:C;');
- $table3->easyCell('7','align:C;');
- $table3->easyCell('8','align:C;');
- $table3->printRow();
- /*
- $skl = "select * from penempatan where rombel='$kelas' and tapel='$tapel' order by nama asc";
-$qkl = $connect->query($skl);
-while($sis=$qkl->fetch_assoc()){
+ $table2=new easyTable($pdf, '{40,175}');
+ $table2->rowStyle('font-size:10; font-style:B;');
+ $table2->easyCell('Nama', 'align:L;');
+ $table2->easyCell(': '.$siswa['nama'], 'align:L;');
+ $table2->printRow();
+ $table2->easyCell('Muatan Pelajaran', 'align:L;');
+ $table2->easyCell(': '.$nmapel['nama_mapel'], 'align:L;');
+ $table2->printRow();
+ $table2->easyCell('Kelas/Semester', 'align:L;');
+ $table2->easyCell(': '.$ab.'/'.$smt, 'align:L;');
+ $table2->printRow();
+ $table2->endTable(5);
  
-}
-*/
- $skl = "select * from penempatan where rombel='$kelas' and tapel='$tapel' order by nama asc";
- $qkl = $connect->query($skl);
- $ah=0;
- while($sis=$qkl->fetch_assoc()){
-	 $ah++;
-	 $nkd=0;
-	 $ids=$sis['peserta_didik_id'];
-	 $nto=$connect->query("select * from siswa where peserta_didik_id='$ids'")->fetch_assoc();
-	 $table3->easyCell($ah,'align:C;rowspan:'.$jKD);
-	 $table3->easyCell($nto['nis'],'align:C;rowspan:'.$jKD);
-	 $table3->easyCell($nto['nama'],'align:C;rowspan:'.$jKD);
-	 $data1=$connect->query("select * from pemetaan where kelas='$ab' and smt='$smt' and kd_aspek='3' and mapel='$mp' group by nama_peta limit 0,1")->fetch_assoc();
-	 $kda=$data1['nama_peta'];
-	 $namakd=$connect->query("select * from kkmku where kelas='$ab' and tapel='$tapel' and mapel='$mp' and kd='$kda'")->fetch_assoc();
-	 $skl1 = "select * from pemetaan where kelas='$ab' and smt='$smt' and kd_aspek='3' and mapel='$mp' group by nama_peta limit 1,10";
-	 $qkl1 = $connect->query($skl1);
-	 
-		 $table3->easyCell($data1['nama_peta'],'align:C;');
-		 $table3->easyCell($namakd['kd'],'align:C;');
-		 for ($i = 5; $i < 9; $i++){
-			 $dNH=$connect->query("select AVG(nilai) as nilai_kd from nh where id_pd='$ids' and kelas='$ab' and smt='$smt' and tapel='$tapel' and mapel='$mp' and tema='$i' and kd='$kda'")->fetch_assoc();
-			 $nkd=$dNH['nilai_kd'];
-			 if($nkd==0){
-				$table3->easyCell('','bgcolor:#acaeaf;'); 
-			 }else{
-			 $table3->easyCell(number_format($nkd,0),'align:C;');
-			 };
-		 };
-		 $adaNH1=$connect->query("select AVG(nilai) as nilai_nh from nh where id_pd='$ids' and kelas='$ab' and smt='$smt' and tapel='$tapel' and mapel='$mp' and kd='$kda'")->num_rows;
-		 if($adaNH1>0){
-		 $rNH=$connect->query("select AVG(nilai) as nilai_nh from nh where id_pd='$ids' and kelas='$ab' and smt='$smt' and tapel='$tapel' and mapel='$mp' and kd='$kda'")->fetch_assoc();
-		 $nilaiNH1=$rNH['nilai_nh'];
-		 }else{
-			 $nilaiNH1=0;
-		 };
-		 $table3->easyCell(number_format($nilaiNH1,0),'align:C;');
-		 $adaPTS=$connect->query("select * from nuts where id_pd='$ids' and kelas='$ab' and smt='$smt' and tapel='$tapel' and mapel='$mp' and kd='$kda'")->num_rows;
-		 if($adaPTS>0){
-			$nPTS=$connect->query("select * from nuts where id_pd='$ids' and kelas='$ab' and smt='$smt' and tapel='$tapel' and mapel='$mp' and kd='$kda'")->fetch_assoc();
-			$nilaiPTS=$nPTS['nilai'];
-		 }else{
-			 $nilaiPTS=0;
-		 };
-		 $table3->easyCell(number_format($nilaiPTS,0),'align:C;');
-		 $adaPAS=$connect->query("select * from nats where id_pd='$ids' and kelas='$ab' and smt='$smt' and tapel='$tapel' and mapel='$mp' and kd='$kda'")->num_rows;
-		 if($adaPAS>0){
-		 $nPAS=$connect->query("select * from nats where id_pd='$ids' and kelas='$ab' and smt='$smt' and tapel='$tapel' and mapel='$mp' and kd='$kda'")->fetch_assoc();
-		 $nilaiPAS=$nPAS['nilai'];
-		 }else{
-			 $nilaiPAS=0;
-		 };
-		 $table3->easyCell(number_format($nilaiPAS,0),'align:C;');
-		 if($nilaiPTS==0){
-			 $naKD=(2*$nilaiNH1+$nilaiPAS)/3;
-		 }else{
-			 $naKD=(2*$nilaiNH1+$nilaiPAS+$nilaiPTS)/4;
-		 };
-		 $table3->easyCell(number_format($naKD,0),'align:C;');
-		 $table3->easyCell('','align:C;');
-		 $table3->easyCell('','align:C;rowspan:'.$jKD);
-		 $table3->easyCell('','align:C;rowspan:'.$jKD);
-		 $table3->easyCell('','align:C;rowspan:'.$jKD);
-		 $table3->printRow();
-		while($sis1=$qkl1->fetch_assoc()){
-		 $kda1=$sis1['nama_peta'];
-		 $namakd1=$connect->query("select * from kkmku where kelas='$ab' and tapel='$tapel' and mapel='$mp' and kd='$kda1'")->fetch_assoc();
-		 $table3->easyCell($sis1['nama_peta'],'align:C;');
-		 $table3->easyCell($namakd1['kd'],'align:C;');
-		 for ($i = 5; $i < 9; $i++){
-			 $dNH=$connect->query("select AVG(nilai) as nilai_kd from nh where id_pd='$ids' and kelas='$ab' and smt='$smt' and tapel='$tapel' and mapel='$mp' and tema='$i' and kd='$kda1'")->fetch_assoc();
-			 $nkd=$dNH['nilai_kd'];
-			 if($nkd==0){
-				 $table3->easyCell('','bgcolor:#acaeaf;');
-			 }else{
-			 $table3->easyCell(number_format($nkd,0),'align:C;');
-			 };
-		 };
-		 $adaNH=$connect->query("select AVG(nilai) as nilai_nh from nh where id_pd='$ids' and kelas='$ab' and smt='$smt' and tapel='$tapel' and mapel='$mp' and kd='$kda1'")->num_rows;
-		 if($adaNH>0){
-		 $rNH=$connect->query("select AVG(nilai) as nilai_nh from nh where id_pd='$ids' and kelas='$ab' and smt='$smt' and tapel='$tapel' and mapel='$mp' and kd='$kda1'")->fetch_assoc();
-		 $nilaiNH=$rNH['nilai_nh'];
-		 }else{
-			 $nilaiNH=0;
-		 };
-		 $table3->easyCell(number_format($nilaiNH,0),'align:C;');
-		 $adaPTS1=$connect->query("select * from nuts where id_pd='$ids' and kelas='$ab' and smt='$smt' and tapel='$tapel' and mapel='$mp' and kd='$kda1'")->num_rows;
-		 if($adaPTS1>0){
-		 $nPTS=$connect->query("select * from nuts where id_pd='$ids' and kelas='$ab' and smt='$smt' and tapel='$tapel' and mapel='$mp' and kd='$kda1'")->fetch_assoc();
-		 $nilaiPTS1=$nPTS['nilai'];
-		 }else{
-			 $nilaiPTS1=0;
-		 };
-		 $table3->easyCell(number_format($nilaiPTS1,0),'align:C;');
-		 $adaPAS1=$connect->query("select * from nats where id_pd='$ids' and kelas='$ab' and smt='$smt' and tapel='$tapel' and mapel='$mp' and kd='$kda1'")->num_rows;
-		 if($adaPAS1>0){
-		 $nPAS=$connect->query("select * from nats where id_pd='$ids' and kelas='$ab' and smt='$smt' and tapel='$tapel' and mapel='$mp' and kd='$kda1'")->fetch_assoc();
-		 $nilaiPAS1=$nPAS['nilai'];
-		 }else{
-			 $nilaiPAS1=0;
-		 };
-		 $table3->easyCell(number_format($nilaiPAS1,0),'align:C;');
-		 if($nilaiPTS1==0){
-			 $naKD=(2*$nilaiNH+$nilaiPAS1)/3;
-		 }else{
-			 $naKD=(2*$nilaiNH+$nilaiPAS1+$nilaiPTS1)/4;
-		 };
-		 $table3->easyCell(number_format($naKD,0),'align:C;');
-		 $table3->easyCell('','align:C;');
-		 $table3->printRow();
+ $jKD=$connect->query("select * from pemetaan where kelas='$ab' and smt='$smt' and kd_aspek='3' and mapel='$mp' group by nama_peta order by nama_peta asc")->num_rows;
+ $jTema=$connect->query("select * from tema where kelas='$ab' and smt='$smt' group by tema order by tema asc")->num_rows;
+ if($smt==1){
+	 if($ab>3){
+		 $table2=new easyTable($pdf, '{10,30,30,30,30,30,30,30,30,30,30}', 'border:1');
+		 $table2->rowStyle('font-size:10;');
+		 $table2->easyCell('No', 'align:C;rowspan:2');
+		 $table2->easyCell('KD', 'align:C;rowspan:2');
+		 $table2->easyCell('Penilaian Harian', 'align:C;colspan:5');
+		 $table2->easyCell('NPH', 'align:C;rowspan:2');
+		 $table2->easyCell('NPTS', 'align:C;rowspan:2');
+		 $table2->easyCell('NPAS', 'align:C;rowspan:2');
+		 $table2->easyCell('Nilai KD', 'align:C;rowspan:2');
+		 $table2->printRow();
+		 $table2->rowStyle('font-size:10;');
+		 $table2->easyCell('Tema 1', 'align:C;');
+		 $table2->easyCell('Tema 2', 'align:C;');
+		 $table2->easyCell('Tema 3', 'align:C;');
+		 $table2->easyCell('Tema 4', 'align:C;');
+		 $table2->easyCell('Tema 5', 'align:C;');
+		 $table2->printRow();
+	 }else{
+		 $table2=new easyTable($pdf, '{10,30,30,30,30,30,30,30,30,30}', 'border:1');
+		 $table2->rowStyle('font-size:10;');
+		 $table2->easyCell('No', 'align:C;rowspan:2');
+		 $table2->easyCell('KD', 'align:C;rowspan:2');
+		 $table2->easyCell('Penilaian Harian', 'align:C;colspan:4');
+		 $table2->easyCell('NPH', 'align:C;rowspan:2');
+		 $table2->easyCell('NPTS', 'align:C;rowspan:2');
+		 $table2->easyCell('NPAS', 'align:C;rowspan:2');
+		 $table2->easyCell('Nilai KD', 'align:C;rowspan:2');
+		 $table2->printRow();
+		 $table2->rowStyle('font-size:10;');
+		 $table2->easyCell('Tema 1', 'align:C;');
+		 $table2->easyCell('Tema 2', 'align:C;');
+		 $table2->easyCell('Tema 3', 'align:C;');
+		 $table2->easyCell('Tema 4', 'align:C;');
+		 $table2->printRow();
+	 };
+ }else{
+	 if($ab>3){
+		 $table2=new easyTable($pdf, '{10,30,30,30,30,30,30,30,30,30}', 'border:1');
+		 $table2->rowStyle('font-size:10;');
+		 $table2->easyCell('No', 'align:C;rowspan:2');
+		 $table2->easyCell('KD', 'align:C;rowspan:2');
+		 $table2->easyCell('Penilaian Harian', 'align:C;colspan:4');
+		 $table2->easyCell('NPH', 'align:C;rowspan:2');
+		 $table2->easyCell('NPTS', 'align:C;rowspan:2');
+		 $table2->easyCell('NPAS', 'align:C;rowspan:2');
+		 $table2->easyCell('Nilai KD', 'align:C;rowspan:2');
+		 $table2->printRow();
+		 $table2->rowStyle('font-size:10;');
+		 $table2->easyCell('Tema 6', 'align:C;');
+		 $table2->easyCell('Tema 7', 'align:C;');
+		 $table2->easyCell('Tema 8', 'align:C;');
+		 $table2->easyCell('Tema 9', 'align:C;');
+		 $table2->printRow();
+	 }else{
+		 $table2=new easyTable($pdf, '{10,30,30,30,30,30,30,30,30,30}', 'border:1');
+		 $table2->rowStyle('font-size:10;');
+		 $table2->easyCell('No', 'align:C;rowspan:2');
+		 $table2->easyCell('KD', 'align:C;rowspan:2');
+		 $table2->easyCell('Penilaian Harian', 'align:C;colspan:4');
+		 $table2->easyCell('NPH', 'align:C;rowspan:2');
+		 $table2->easyCell('NPTS', 'align:C;rowspan:2');
+		 $table2->easyCell('NPAS', 'align:C;rowspan:2');
+		 $table2->easyCell('Nilai KD', 'align:C;rowspan:2');
+		 $table2->printRow();
+		 $table2->rowStyle('font-size:10;');
+		 $table2->easyCell('Tema 5', 'align:C;');
+		 $table2->easyCell('Tema 6', 'align:C;');
+		 $table2->easyCell('Tema 7', 'align:C;');
+		 $table2->easyCell('Tema 8', 'align:C;');
+		 $table2->printRow();
 	 };
  };
- $table3->endTable(10);
  
-//====================================================================
-
-
-
+ $sql = "select * from pemetaan where kelas='$ab' and smt='$smt' and kd_aspek='3' and mapel='$mp' group by nama_peta order by nama_peta asc";
+ $query = $connect->query($sql);
+ $nmr=1;
+ $nilaiKD=0;
+ while($s=$query->fetch_assoc()) {
+	$table2->easyCell($nmr, 'align:C;');
+	$nkd=$s['nama_peta'];
+	$table2->easyCell($nkd, 'align:C;');
+	$sql1 = "select * from tema where kelas='$ab' and smt='$smt' order by tema asc";
+	$query1 = $connect->query($sql1);
+	$nilait=0;
+	while($n=$query1->fetch_assoc()) {
+		$ntema = $n['tema'];
+		$niTema=$connect->query("select AVG(nilai) as NilaiTema from nh where id_pd='$idp' and kelas='$ab' and smt='$smt' and tapel='$tapel' and mapel='$mp' and tema='$ntema' and kd='$nkd'")->fetch_assoc();
+		$nilait=$nilait+$niTema['NilaiTema'];
+		$table2->easyCell(number_format($niTema['NilaiTema'],0), 'align:C;');
+	};
+	$NPH=$connect->query("select AVG(nilai) as NilaiPH from nh where id_pd='$idp' and kelas='$ab' and smt='$smt' and tapel='$tapel' and mapel='$mp' and kd='$nkd'")->fetch_assoc();
+	//$NPH=$nilait/4;
+	$table2->easyCell(number_format($NPH['NilaiPH'],0), 'align:C;');
+	$CNPTS=$connect->query("select nilai from nuts where id_pd='$idp' and kelas='$ab' and smt='$smt' and tapel='$tapel' and mapel='$mp' and kd='$nkd'")->num_rows;
+	if($CNPTS>0){
+		$NPTS=$connect->query("select nilai from nuts where id_pd='$idp' and kelas='$ab' and smt='$smt' and tapel='$tapel' and mapel='$mp' and kd='$nkd'")->fetch_assoc();
+		$NilaiPTS=$NPTS['nilai'];
+	}else{
+		$NilaiPTS=0;
+	};
+	$table2->easyCell(number_format($NilaiPTS,0), 'align:C;');
+	$CNPAS=$connect->query("select nilai from nats where id_pd='$idp' and kelas='$ab' and smt='$smt' and tapel='$tapel' and mapel='$mp' and kd='$nkd'")->num_rows;
+	if($CNPAS>0){
+		$NPAS=$connect->query("select nilai from nats where id_pd='$idp' and kelas='$ab' and smt='$smt' and tapel='$tapel' and mapel='$mp' and kd='$nkd'")->fetch_assoc();
+		$NilaiPAS=$NPAS['nilai'];
+	}else{
+		$NilaiPAS=0;
+	};
+	$table2->easyCell(number_format($NilaiPAS,0), 'align:C;');
+	if($NilaiPTS==0){
+		$NKD=((2*$NPH['NilaiPH'])+$NilaiPAS)/3;
+	}else{
+		$NKD=((2*$NPH['NilaiPH'])+$NilaiPTS+$NilaiPAS)/4;
+	};
+	$table2->easyCell(number_format($NKD,0), 'align:C;');
+	$nilaiKD=$nilaiKD+$NKD;
+	$table2->printRow();
+	$nmr=$nmr+1;
+ };
+ $table2->rowStyle('font-size:10;');
+ if($smt==1){
+	 if($ab>3){
+		 $table2->easyCell('NILAI AKHIR', 'align:C;colspan:10');
+	 }else{
+		 $table2->easyCell('NILAI AKHIR', 'align:C;colspan:9');
+	 };
+ }else{
+	 if($ab>3){
+		 $table2->easyCell('NILAI AKHIR', 'align:C;colspan:9');
+	 }else{
+		 $table2->easyCell('NILAI AKHIR', 'align:C;colspan:9');
+	 };
+ };
+ $NA=$nilaiKD/$jKD;
+ $table2->easyCell(number_format($NA,0), 'align:C;');
+ $table2->printRow();
+ $table2->endTable(5);
+};
  $pdf->Output();
-
-
- 
-
 ?>

@@ -45,11 +45,12 @@
 					<?php if($level==98 or $level==97){ ?>
 					<div class="row">
 						<div class="col-md-8">
-							<form class="form-horizontal" action="absensi.php" method="GET">
 							<div class="form-group">
 								<label>Pilih Tanggal</label>
 								<div class="input-group">
-									<input type="text" class="form-control" id="datepicker" name="tglbro" value="<?=$tgl;?>" onchange="this.form.submit()">
+									<input type="hidden" id="kelas" class="form-control" value="<?php echo $kelas;?>">
+									<input type="hidden" id="tapel" class="form-control" value="<?=$tapel;?>">
+									<input type="text" class="form-control" id="datepicker" value="<?=$tgl;?>">
 									<div class="input-group-append">
 										<span class="input-group-text">
 										<i class="fa fa-calendar-check"></i>
@@ -57,7 +58,6 @@
 									</div>
 								</div>
 							</div>
-							</form>
 							<div class="card">
 								<div class="card-header">
 									<div class="card-head-row">
@@ -215,63 +215,19 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Absensi Siswa Kelas <?php echo $kelas;?></h4>
+                <h4 class="modal-title">Absensi Siswa</h4>
               </div>
-              <form class="form" action="modul/siswa/tambahabsen.php" method="POST" id="createAbsenForm">
-                        <div class="modal-body">
-							<div class="row">
-								<div class="col-md-12">
-									<div class="form-group form-group-default">
-										<label>Tanggal</label>
-										<input type="hidden" id="kelas" name="kelas" class="form-control" value="<?php echo $kelas;?>">
-										<input type="hidden" id="tanggals" name="tanggals" class="form-control" value="<?=$tahun;?>-<?=$bulan;?>-<?=$tanggal;?>">
-										<input type="text" class="form-control" name="username" placeholder="Name" value="<?=$tanggal;?> <?=$BulanIndo[(int)$bulan-1];?> <?=$tahun;?>">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-6">
-									<div class="form-group form-group-default">
-										<label>Nama Siswa</label>
-										<select class="form-control" name="pdid" id="pdid">
-											<option value="">==Pilih Siswa==</option>
-											<?php 
-											$sql2 = "select * from penempatan where rombel='$kelas' and tapel='$tapel' order by nama asc";
-											$qu3 = mysqli_query($koneksi,$sql2) or die("database error:". mysqli_error($koneksi));
-											while($po=mysqli_fetch_array($qu3)){;
-												$idps=$po['peserta_didik_id'];
-												$sql21 = "SELECT * FROM siswa WHERE peserta_didik_id='$idps'";
-												$qu31 = mysqli_query($koneksi,$sql21) or die("database error:". mysqli_error($koneksi));
-												$pj=mysqli_fetch_array($qu31);
-											?>
-											<option value="<?=$po['peserta_didik_id'];?>"><?=$pj['nama'];?></option>
-											<?php };?>
-										</select>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group form-group-default">
-										<label>Absensi</label>
-										<select class="form-control" name="jnabsen" id="jnabsen">
-											<option value="">==Pilih Absensi==</option>
-											<option value="S">Sakit</option>
-											<option value="I">Ijin</option>
-											<option value="A">Alpa</option>
-										</select>
-									</div>
-								</div>
-							</div>
-						</div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Tutup</button>
-                            <button type="submit" class="btn btn-danger waves-effect waves-light">Simpan</button>
-                        </div>
+                        <form class="form-horizontal" action="modul/siswa/tambahabsen.php" autocomplete="off" method="POST" id="createAbsenForm">
+						<div class="fetched-data"></div>
+                        
 						</form>
-            </div>
+						
+			</div>
             <!-- /.modal-content -->
           </div>
           <!-- /.modal-dialog -->
         </div>
+		
 		
 		<!--Modal tambah hari-->
 		<div class="modal fade" id="tambahHari">
@@ -381,25 +337,61 @@
 	var absenTable;
 	var hariTable;
 	$(document).ready(function() {
+		var kelas=$('#kelas').val();
+		var tapel=$('#tapel').val();
+		var tgl=$('#datepicker').val();
 		absenTable = $('#absenTable').DataTable( {
-			"searching": false,
-			"ajax": "modul/siswa/absensiku.php?kelas=<?=$kelas;?>&tgl=<?=$tgl;?>&tapel=<?=$tapel;?>",
+			"destroy":true,
+			"searching": true,
+			"paging":false,
+			"ajax": "modul/siswa/absensiku.php?kelas="+kelas+"&tapel="+tapel+"&tgl="+tgl,
 			"order": []
 		} );
 		hariTable = $('#hariTable').DataTable( {
+			"destroy":true,
 			"searching": false,
 			"ajax": "modul/siswa/efektif.php?tapel=<?=$tapel;?>",
 			"order": []
 		} );
 		$('#datepicker').datepicker({
 		  autoclose: true
-		})
-		$("#addAbsenModalBtn").on('click', function() {
-			// reset the form 
-			$("#createAbsenForm")[0].reset();
+		});
+		$('#datepicker').change(function(){
+			//Mengambil value dari option select kd kemudian parameternya dikirim menggunakan ajax
+			var kelas=$('#kelas').val();
+			var tapel=$('#tapel').val();
+			var tgl=$('#datepicker').val();
 			
-			// submit form
-			$("#createAbsenForm").unbind('submit').bind('submit', function() {
+			absenTable = $('#absenTable').DataTable( {
+				"destroy":true,
+				"searching": true,
+				"paging":false,
+				"ajax": "modul/siswa/absensiku.php?kelas="+kelas+"&tapel="+tapel+"&tgl="+tgl,
+				"order": []
+			} );
+		});
+		$('#tambahAbsen').on('show.bs.modal', function (e) {
+            var rowid = $(e.relatedTarget).data('pdid');
+			var rowtgl = $(e.relatedTarget).data('tgls');
+			var rowtapel = $(e.relatedTarget).data('tapel');
+			var rowkelas = $(e.relatedTarget).data('kelas');
+            //menggunakan fungsi ajax untuk pengambilan data
+            $.ajax({
+                type : 'post',
+                url : 'modul/siswa/modal_absen.php',
+                data :  'rowid='+ rowid +'&kelas='+rowkelas+'&tapel='+rowtapel+'&tgl='+rowtgl,
+				beforeSend: function()
+						{	
+							$(".fetched-data").html('<i class="fa fa-spinner fa-pulse fa-fw"></i> Loading ...');
+							$(".smpn").hide();
+						},
+                success : function(data){
+                $('.fetched-data').html(data);//menampilkan data ke dalam modal
+				$(".smpn").show();
+                }
+            });
+         });
+		$("#createAbsenForm").unbind('submit').bind('submit', function() {
 
 				$(".text-danger").remove();
 
@@ -420,39 +412,37 @@
 
 							if(response.success == true) {
 								$.notify({
-											icon: 'flaticon-alarm-1',
-											title: 'Sukses',
-											message: response.messages,
-										},{
-											type: 'info',
-											placement: {
-											from: "bottom",
-											align: "left"
-										},
-											time: 10,
-										});
+									icon: 'flaticon-alarm-1',
+									title: 'Sukses',
+									message: response.messages,
+								},{
+									type: 'info',
+									placement: {
+									from: "bottom",
+									align: "right"
+								},
+									time: 10,
+								});
 
 								// reset the form
 								$("#tambahAbsen").modal('hide');
 
 								// reload the datatables
 								absenTable.ajax.reload(null, false);
-								$("#createAbsenForm")[0].reset();
-								// this function is built in function of datatables;
-
+								
 							} else {
 								$.notify({
-											icon: 'flaticon-alarm-1',
-											title: 'Sukses',
-											message: response.messages,
-										},{
-											type: 'info',
-											placement: {
-											from: "bottom",
-											align: "left"
-										},
-											time: 10,
-										});
+									icon: 'flaticon-alarm-1',
+									title: 'Error',
+									message: response.messages,
+								},{
+									type: 'info',
+									placement: {
+									from: "bottom",
+									align: "right"
+								},
+									time: 10,
+								});
 							}  // /else
 						} // success  
 					}); // ajax subit 				
@@ -461,8 +451,6 @@
 
 				return false;
 			}); // /submit form for create member
-		}); // /add modal
-		
 		$("#addHariModalBtn").on('click', function() {
 			// reset the form 
 			$("#createHariForm")[0].reset();
